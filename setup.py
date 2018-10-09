@@ -23,5 +23,6 @@ setup(
     },
     install_requires=[
         'pylexibank>=0.9.0',
+        'beautifulsoup4>=4.6.3',
     ]
 )

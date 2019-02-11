@@ -16,5 +16,5 @@ class Dataset(BaseDataset):
               "https://mpi-lingweb.shh.mpg.de/numeral/"])
 
     def cmd_install(self, **kw):
-        with self.cldf as _:
-            pass
+        with self.cldf as df:
+            _ = df

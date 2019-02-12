@@ -37,7 +37,7 @@ def find_number_table(table):
     we don't have to rely on the (implicit) ordering of tables within the HTML
     files.
     :param table: The tables from a ResultSet to be processed.
-    :return:
+    :return: True if number table (>= 10 numerals), False otherwise.
     """
     numbers = []
 

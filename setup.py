@@ -18,11 +18,17 @@ setup(
     zip_safe=False,
     entry_points={
         'lexibank.dataset': [
-            'numerals=lexibank_numerals:Dataset',
+            'numerals=pynumerals.lexibank:Dataset',
         ]
     },
     install_requires=[
+        'clldutils',
         'pylexibank>=0.9.0',
         'beautifulsoup4>=4.6.3',
+        'fuzzywuzzy',
+        'pyglottolog',
+        'pytest',
+        'xlrd',
+        'attrs',
     ]
 )

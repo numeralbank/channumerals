@@ -29,5 +29,6 @@ setup(
         'pyglottolog',
         'pytest',
         'xlrd',
+        'attrs',
     ]
 )

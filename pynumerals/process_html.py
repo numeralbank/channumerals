@@ -27,8 +27,10 @@ def find_tables(file_paths):
     corresponding HTML file.
     """
     for f in file_paths:
-        parsed = BeautifulSoup(f.read_text(), 'html.parser')
-        yield (f.stem, parsed.find_all('table', {'class': TABLE_IDENTIFIER}))
+        if f:
+            parsed = BeautifulSoup(f.read_text(), 'html.parser')
+            yield (f.stem,
+                   parsed.find_all('table', {'class': TABLE_IDENTIFIER}))
 
 
 def find_number_table(table):
@@ -46,7 +48,7 @@ def find_number_table(table):
             # We collect all potential numbers in a list and simply check
             # the length of the list at the end.
             numbers.append(parse_number(element))
-        except ValueError:
+        except ValueError:  # TODO: Log exceptions and/or potential problems.
             continue
 
     # TODO: Check the sanity of this assumption.
@@ -80,5 +82,7 @@ def parse_table(table):
 
 def iterate_tables(tables):
     for table in tables:
-        if find_number_table(parse_table(table)) is True:
-            print(parse_table(table))
+        parsed_table = parse_table(table)
+
+        if find_number_table(parsed_table) is True:
+            _ = parse_table(table)

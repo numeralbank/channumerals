@@ -13,7 +13,7 @@ def get_file_paths(raw_htmls):
     :param raw_htmls: Path to raw numerals HTML files.
     :return: A list of PosixPath() objects with path information for the files.
     """
-    return [f if f.suffix == '.htm' and f.name not in SKIP
+    return [f if f.suffix.startswith('.htm') and f.name not in SKIP
             else None for f in walk(raw_htmls)]
 
 
@@ -81,8 +81,15 @@ def parse_table(table):
 
 
 def iterate_tables(tables):
+    number_tables = []
+    other_tables = []
+
     for table in tables:
         parsed_table = parse_table(table)
 
         if find_number_table(parsed_table) is True:
-            _ = parse_table(table)
+            number_tables.append(parsed_table)
+        else:
+            other_tables.append(table.text)
+
+    return number_tables, other_tables

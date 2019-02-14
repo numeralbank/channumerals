@@ -13,9 +13,13 @@ def main():
     for table_set in tables:
         entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1])
         logging.info("Base name: " + entry.base_name)
-        logging.info(entry.glottocode_candidates)
-        logging.info(entry.number_tables)
+        logging.info("Glottocodes:")
+        logging.info(entry.glottocodes)
+        logging.info("Numeral lexemes:")
+        logging.info(entry.get_numeral_lexemes())
+        logging.info("Other tables:")
         logging.info(entry.other_tables)
+        logging.info("--------------------------------------------------------")
 
 
 if __name__ == '__main__':

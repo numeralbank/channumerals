@@ -2,18 +2,36 @@ import attr
 
 from pynumerals.glottocode_matcher import GlottocodeMatcher
 from pynumerals.process_html import iterate_tables
+from pynumerals.number_parser import parse_number
 
 
 @attr.s
 class NumeralsEntry:
     base_name = attr.ib(default=None)
     tables = attr.ib(default=None)
-    glottocode_candidates = attr.ib(init=False)
+    glottocodes = attr.ib(init=False)
     number_tables = attr.ib(init=False)
     other_tables = attr.ib(init=False)
 
     def __attrs_post_init__(self):
-        self.glottocode_candidates =\
-            GlottocodeMatcher(self.base_name).candidates
-
+        self.glottocodes = GlottocodeMatcher(self.base_name).candidates
         self.number_tables, self.other_tables = iterate_tables(self.tables)
+
+    def get_numeral_lexemes(self):
+        varieties = []
+
+        for number_table in self.number_tables:
+            n = {}
+
+            for entry in number_table:
+                try:
+                    parsed_entry = parse_number(entry)
+                except ValueError:  # Most likely runaway tables.
+                    continue
+                split_str = str(parsed_entry) + '.'
+                lex = list(filter(None, entry.split(split_str)))
+                n[parsed_entry] = [clean.strip() for clean in lex]
+
+            varieties.append(n)
+
+        return varieties

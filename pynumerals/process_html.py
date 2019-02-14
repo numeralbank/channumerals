@@ -3,7 +3,7 @@ from clldutils.path import walk
 from pynumerals.number_parser import parse_number
 
 TABLE_IDENTIFIER = 'MsoTableGrid'
-SKIP = ['How-to-view-EN.htm', 'How-to-view-CH.htm']
+SKIP = ['How-to-view-EN.htm', 'How-to-view-CH.htm', 'problem.html']
 
 
 def get_file_paths(raw_htmls):

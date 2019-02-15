@@ -48,8 +48,8 @@ def find_number_table(table):
             # We collect all potential numbers in a list and simply check
             # the length of the list at the end.
             numbers.append(parse_number(element))
-        except ValueError:  # TODO: Log exceptions and/or potential problems.
-            continue
+        except ValueError:
+            pass
 
     # TODO: Check the sanity of this assumption.
     # We assume that we've found a number table if the list of numbers is >= 10.

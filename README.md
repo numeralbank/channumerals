@@ -14,8 +14,8 @@ Cite the source dataset as
 
 - **Varieties:** 3,165
 - **Concepts:** 136
-- **Lexemes:** 320,782
-- **Synonymy:** 2.82
+- **Lexemes:** 160,391
+- **Synonymy:** 1.41
 - **Cognacy:** 0 cognates in 0 cognate sets
 - **Invalid lexemes:** 0
 - **Tokens:** 0
@@ -48,4 +48,4 @@ Cite the source dataset as
   - Senufo-Shempire [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
 
 
-- Entries missing sources: 320782/320782 (100.00%)
+- Entries missing sources: 160391/160391 (100.00%)

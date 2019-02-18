@@ -16,19 +16,12 @@
                 "glottolog_version": "pyglottolog-1.2.1-138-g229faafceb",
                 "concepticon_version": "pyconcepticon-1.4.0-39-g121e0c7"
             }
-        },
-        {
-            "dc:title": "environment",
-            "properties": {
-                "glottolog_version": "pyglottolog-1.2.1-138-g229faafceb",
-                "concepticon_version": "pyconcepticon-1.4.0-39-g121e0c7"
-            }
         }
     ],
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 320782,
+            "dc:extent": 160391,
             "tableSchema": {
                 "columns": [
                     {

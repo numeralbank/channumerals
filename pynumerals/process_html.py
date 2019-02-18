@@ -1,9 +1,11 @@
 from bs4 import BeautifulSoup
 from clldutils.path import walk
 from pynumerals.number_parser import parse_number
+import re
 
 TABLE_IDENTIFIER = 'MsoTableGrid'
 SKIP = ['How-to-view-EN.htm', 'How-to-view-CH.htm', 'problem.html']
+ETHNOLOGUE = re.compile(r'http://www\.ethnologue\.com/')
 
 
 def get_file_paths(raw_htmls):
@@ -90,6 +92,29 @@ def iterate_tables(tables):
         if find_number_table(parsed_table) is True:
             number_tables.append(parsed_table)
         else:
-            other_tables.append(table.text)
+            other_tables.append(table)
 
     return number_tables, other_tables
+
+
+def find_ethnologue_codes(tables):
+    """
+    Takes a set of tables (preferably other_tables from a NumeralsEntry object)
+    and tries to find Ethnologue links and their corresponding codes for better
+    matching of Glottocodes.
+    :param tables: A set of tables (or a single table) from parsing a numerals
+    HTML entry.
+    :return: A list of Ethnologue codes found on the respective site.
+    """
+    ethnologue_codes = []
+
+    for table in tables:
+        link = table.find('a', href=ETHNOLOGUE)
+
+        # Split URLs on their 'code=' part and take the last element, e.g.:
+        # 'http://www.ethnologue.com/show_language.asp?code=pot' -> 'pot'
+        # TODO: This misses other ways of linking to Ethnologue.
+        if link and ('code=' in link):
+            ethnologue_codes.append(link['href'].split('code=')[1])
+
+    return ethnologue_codes

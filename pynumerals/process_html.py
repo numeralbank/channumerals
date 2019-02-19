@@ -7,6 +7,11 @@ TABLE_IDENTIFIER = 'MsoTableGrid'
 SKIP = ['How-to-view-EN.htm', 'How-to-view-CH.htm', 'problem.html']
 ETHNOLOGUE = re.compile(r'http://www\.ethnologue\.com/')
 
+CODE_PATTERNS = [
+    re.compile('code=(?P<code>[a-zA-Z]{3})$'),
+    re.compile('language/(?P<code>[a-zA-Z]{3})($|/|-)'),
+]
+
 
 def get_file_paths(raw_htmls):
     """
@@ -109,13 +114,13 @@ def find_ethnologue_codes(tables):
 
     for table in tables:
         link = table.find('a', href=ETHNOLOGUE)
-
-        # Split URLs on their 'code=' part and take the last element, e.g.:
-        # 'http://www.ethnologue.com/show_language.asp?code=pot' -> 'pot'
-        # 'https://www.ethnologue.com/language/bth' -> 'bth'
-        if link and ('code=' in link):
-            ethnologue_codes.append(link['href'].split('code=')[1])
-        elif link and ('language/' in link):
-            ethnologue_codes.append(link['href'].split('language/')[1])
+        if link:
+            for pattern in CODE_PATTERNS:
+                m = pattern.search(link['href'])
+                if m:
+                    ethnologue_codes.append(m.group('code').lower())
+                    break
+            else:
+                print(link['href'])
 
     return ethnologue_codes

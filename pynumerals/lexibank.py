@@ -23,6 +23,9 @@ class Dataset(BaseDataset):
             entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1],
                                   codes=glottolog_codes, iso=glottolog_iso)
             entries.append(entry)
+            if (not entry.glottocodes) and entry.get_numeral_lexemes():
+                print('---', entry.base_name)
+        return
 
         with self.cldf as ds:
             meaning_map = {}

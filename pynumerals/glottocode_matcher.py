@@ -1,6 +1,5 @@
 from fuzzywuzzy.fuzz import token_set_ratio as ts_ratio
 import attr
-import logging
 
 
 @attr.s
@@ -15,14 +14,13 @@ class GlottocodeMatcher:
     def __attrs_post_init__(self):
         candidates = []
 
-        if self.ethnologue_codes:
+        if self.ethnologue_codes and self.ethnologue_codes[0] in self.codes:
             candidates.append(self.codes[self.ethnologue_codes[0]].glottocode)
         else:
-            for lang in self.iso:
-                if ts_ratio(lang.name, self.base_name) >= self.threshhold:
-                    try:
-                        candidates.append(self.codes[lang.code].glottocode)
-                    except KeyError:
-                        logging.warning("Couldn't map: " + lang.code)
+            candidates = [
+                (self.codes[l.code].glottocode, ts_ratio(l.name, self.base_name)) for l in self.iso if l.code in self.codes]
+            candidates = sorted([c for c in candidates if c[1] >= self.threshhold], key=lambda c: -c[1])
+            if candidates:
+                candidates = candidates[0][0]
 
         self.candidates = candidates

@@ -2,6 +2,7 @@ from clldutils.path import Path
 from pylexibank.dataset import Dataset as BaseDataset
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
+import logging
 
 
 class Dataset(BaseDataset):
@@ -14,11 +15,15 @@ class Dataset(BaseDataset):
     def cmd_install(self, **kw):
         html_files = get_file_paths(self.raw)
         tables = find_tables(html_files)
+        glottolog_codes = self.glottolog.languoids_by_code()
+        glottolog_iso = self.glottolog.iso.languages
 
         entries = []
 
         for table_set in tables:
-            entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1])
+            entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1],
+                                  codes=glottolog_codes, iso=glottolog_iso)
+            logging.warning("Mapping: " + entry.base_name)
             entries.append(entry)
 
         with self.cldf as ds:

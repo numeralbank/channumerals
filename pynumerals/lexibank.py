@@ -2,7 +2,6 @@ from clldutils.path import Path
 from pylexibank.dataset import Dataset as BaseDataset
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
-import logging
 
 
 class Dataset(BaseDataset):
@@ -23,7 +22,6 @@ class Dataset(BaseDataset):
         for table_set in tables:
             entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1],
                                   codes=glottolog_codes, iso=glottolog_iso)
-            logging.warning("Mapping: " + entry.base_name)
             entries.append(entry)
 
         with self.cldf as ds:

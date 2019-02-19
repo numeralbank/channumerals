@@ -10,13 +10,13 @@ ETHNOLOGUE = re.compile(r'http://www\.ethnologue\.com/')
 
 def get_file_paths(raw_htmls):
     """
-    Build a list of PosixPath() objects for all files in the specified
+    Build a sorted list of PosixPath() objects for all files in the specified
     directory, e.g. numerals/raw/, skipping files defined in SKIP.
     :param raw_htmls: Path to raw numerals HTML files.
     :return: A list of PosixPath() objects with path information for the files.
     """
-    return [f if f.suffix.startswith('.htm') and f.name not in SKIP
-            else None for f in walk(raw_htmls)]
+    return sorted([f for f in walk(raw_htmls)
+                   if f.suffix.startswith('.htm') and f.name not in SKIP])
 
 
 def find_tables(file_paths):
@@ -29,10 +29,9 @@ def find_tables(file_paths):
     corresponding HTML file.
     """
     for f in file_paths:
-        if f:
-            parsed = BeautifulSoup(f.read_text(), 'html.parser')
-            yield (f.stem,
-                   parsed.find_all('table', {'class': TABLE_IDENTIFIER}))
+        parsed = BeautifulSoup(f.read_text(), 'html.parser')
+        yield (f.stem,
+               parsed.find_all('table', {'class': TABLE_IDENTIFIER}))
 
 
 def find_number_table(table):
@@ -113,8 +112,10 @@ def find_ethnologue_codes(tables):
 
         # Split URLs on their 'code=' part and take the last element, e.g.:
         # 'http://www.ethnologue.com/show_language.asp?code=pot' -> 'pot'
-        # TODO: This misses other ways of linking to Ethnologue.
+        # 'https://www.ethnologue.com/language/bth' -> 'bth'
         if link and ('code=' in link):
             ethnologue_codes.append(link['href'].split('code=')[1])
+        elif link and ('language/' in link):
+            ethnologue_codes.append(link['href'].split('language/')[1])
 
     return ethnologue_codes

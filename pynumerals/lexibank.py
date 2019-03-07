@@ -19,13 +19,16 @@ class Dataset(BaseDataset):
 
         entries = []
 
+        table_debug = 0
         for table_set in tables:
             entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1],
                                   codes=glottolog_codes, iso=glottolog_iso)
             entries.append(entry)
-            if (not entry.glottocodes) and entry.get_numeral_lexemes():
-                print('---', entry.base_name)
-        return
+
+            table_debug += 1
+
+            if table_debug >= 10:
+                break
 
         with self.cldf as ds:
             meaning_map = {}
@@ -61,6 +64,11 @@ class Dataset(BaseDataset):
 
                             if v:
                                 clean = v[0].replace('\n', '').replace('\t', '')
+
+                                # Find () expressions in clean and use them to
+                                # separate, everything not in ( ) is lexeme,
+                                # everything else is comment.
+
                                 ds.add_lexemes(
                                     Value=clean,
                                     Parameter_ID=str(k),

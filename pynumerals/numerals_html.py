@@ -38,6 +38,7 @@ class NumeralsEntry:
                     parsed_entry = parse_number(entry)
                 except ValueError:  # Most likely runaway tables.
                     continue
+
                 split_str = str(parsed_entry) + '.'
                 lex = list(filter(None, entry.split(split_str)))
                 n[parsed_entry] = [clean.strip() for clean in lex]

@@ -2,6 +2,7 @@ from clldutils.path import Path
 from pylexibank.dataset import Dataset as BaseDataset
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
+from pynumerals.helper import int_to_en
 
 
 class Dataset(BaseDataset):
@@ -16,6 +17,10 @@ class Dataset(BaseDataset):
         tables = find_tables(html_files)
         glottolog_codes = self.glottolog.languoids_by_code()
         glottolog_iso = self.glottolog.iso.languages
+        concept_map = {cs.gloss: cs.id for cs in self.concepticon.conceptsets.values()}
+
+        for concept in self.concepts:
+            concept_map[concept["GLOSS"]] = concept["CONCEPTICON_ID"]
 
         entries = []
 
@@ -51,11 +56,15 @@ class Dataset(BaseDataset):
                                 meaning_map[meaning_n] = str(k)
 
                                 ds.add_concept(
-                                    ID=meaning_map[meaning_n], Name=str(k)
+                                    ID=meaning_map[meaning_n],
+                                    Name=str(k),
+                                    Concepticon_ID=concept_map.get(int_to_en(k).upper()),
                                 )
                             else:
                                 ds.add_concept(
-                                    ID=meaning_map[meaning_n], Name=str(k)
+                                    ID=meaning_map[meaning_n],
+                                    Name=str(k),
+                                    Concepticon_ID=concept_map.get(int_to_en(k).upper()),
                                 )
 
                             if v:

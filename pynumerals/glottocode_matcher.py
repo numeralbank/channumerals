@@ -18,9 +18,20 @@ class GlottocodeMatcher:
             candidates.append(self.codes[self.ethnologue_codes[0]].glottocode)
         else:
             candidates = [
-                (self.codes[l.code].glottocode, ts_ratio(l.name, self.base_name)) for l in self.iso if l.code in self.codes]
-            candidates = sorted([c for c in candidates if c[1] >= self.threshhold], key=lambda c: -c[1])
+                (
+                    self.codes[l.code].glottocode,
+                    ts_ratio(l.name, self.base_name),
+                )
+                for l in self.iso
+                if l.code in self.codes
+            ]
+
+            candidates = sorted(
+                [c for c in candidates if c[1] >= self.threshhold],
+                key=lambda c: -c[1],
+            )
+
             if candidates:
-                candidates = candidates[0][0]
+                candidates = [candidates[0][0]]
 
         self.candidates = candidates

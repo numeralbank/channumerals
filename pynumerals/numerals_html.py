@@ -24,7 +24,7 @@ class NumeralsEntry:
             self.base_name,
             ethnologue_codes=self.ethnologue_codes,
             codes=self.codes,
-            iso=self.iso
+            iso=self.iso,
         ).candidates
 
     def get_numeral_lexemes(self):
@@ -39,7 +39,7 @@ class NumeralsEntry:
                 except ValueError:  # Most likely runaway tables.
                     continue
 
-                split_str = str(parsed_entry) + '.'
+                split_str = str(parsed_entry) + "."
                 lex = list(filter(None, entry.split(split_str)))
                 n[parsed_entry] = [clean.strip() for clean in lex]
 

@@ -39,7 +39,8 @@ PATTERN = r"""(?x)
 def parse_number(text):
     match = re.match(PATTERN, text)
     if match is None or not (
-            match.group("integer_part") or match.group("decimal_part")):
+        match.group("integer_part") or match.group("decimal_part")
+    ):
         raise ValueError("Couldn't find a number.")
 
     num_str = match.group("number")

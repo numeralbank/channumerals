@@ -5,7 +5,7 @@ from pynumerals.process_html import get_file_paths, find_tables
 
 
 class Dataset(BaseDataset):
-    id = 'numerals'
+    id = "numerals"
     dir = Path(__file__).parent.parent
 
     def cmd_download(self, **kw):
@@ -19,16 +19,14 @@ class Dataset(BaseDataset):
 
         entries = []
 
-        table_debug = 0
         for table_set in tables:
-            entry = NumeralsEntry(base_name=table_set[0], tables=table_set[1],
-                                  codes=glottolog_codes, iso=glottolog_iso)
+            entry = NumeralsEntry(
+                base_name=table_set[0],
+                tables=table_set[1],
+                codes=glottolog_codes,
+                iso=glottolog_iso,
+            )
             entries.append(entry)
-
-            table_debug += 1
-
-            if table_debug >= 10:
-                break
 
         with self.cldf as ds:
             meaning_map = {}
@@ -38,7 +36,7 @@ class Dataset(BaseDataset):
                     ds.add_language(
                         ID=entry.glottocodes[0],
                         Name=entry.base_name,
-                        Glottocode=entry.glottocodes[0]
+                        Glottocode=entry.glottocodes[0],
                     )
 
             for entry in entries:
@@ -53,17 +51,15 @@ class Dataset(BaseDataset):
                                 meaning_map[meaning_n] = str(k)
 
                                 ds.add_concept(
-                                    ID=meaning_map[meaning_n],
-                                    Name=str(k)
+                                    ID=meaning_map[meaning_n], Name=str(k)
                                 )
                             else:
                                 ds.add_concept(
-                                    ID=meaning_map[meaning_n],
-                                    Name=str(k)
+                                    ID=meaning_map[meaning_n], Name=str(k)
                                 )
 
                             if v:
-                                clean = v[0].replace('\n', '').replace('\t', '')
+                                clean = v[0].replace("\n", "").replace("\t", "")
 
                                 # Find () expressions in clean and use them to
                                 # separate, everything not in ( ) is lexeme,
@@ -72,5 +68,5 @@ class Dataset(BaseDataset):
                                 ds.add_lexemes(
                                     Value=clean,
                                     Parameter_ID=str(k),
-                                    Language_ID=entry.glottocodes[0]
+                                    Language_ID=entry.glottocodes[0],
                                 )

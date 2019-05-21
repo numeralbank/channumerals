@@ -12,28 +12,26 @@ Cite the source dataset as
 ![Concepticon: 0%](https://img.shields.io/badge/Concepticon-0%25-red.svg "Concepticon: 0%")
 ![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
 
-- **Varieties:** 3,426
+- **Varieties:** 3,770
 - **Concepts:** 137
-- **Lexemes:** 181,893
-- **Synonymy:** 1.46
-- **Cognacy:** 0 cognates in 0 cognate sets
-- **Invalid lexemes:** 0
-- **Tokens:** 0
-- **Segments:** 0 (0 BIPA errors, 0 CTLS sound class errors, 0 CLTS modified)
-- **Inventory size (avg):** 0.00
+- **Lexemes:** 183,947
+- **Synonymy:** 1.37
 
 ## Possible Improvements:
 
 - Languages linked to [bookkeeping languoids in Glottolog](http://glottolog.org/glottolog/glottologinformation#bookkeepinglanguoids):
+  - Ahirani [ahir1243](http://glottolog.org/resource/languoid/id/ahir1243)
   - Auvergnat [auve1240](http://glottolog.org/resource/languoid/id/auve1240)
   - Banawa [bana1306](http://glottolog.org/resource/languoid/id/bana1306)
   - Beti [beti1250](http://glottolog.org/resource/languoid/id/beti1250)
   - Bhumij [mund1339](http://glottolog.org/resource/languoid/id/mund1339)
   - Bisu [bisu1247](http://glottolog.org/resource/languoid/id/bisu1247)
   - Bumang [buma1247](http://glottolog.org/resource/languoid/id/buma1247)
+  - Chamari [cham1329](http://glottolog.org/resource/languoid/id/cham1329)
   - Chin-Falam [fala1245](http://glottolog.org/resource/languoid/id/fala1245)
   - Chol-Tila [chol1285](http://glottolog.org/resource/languoid/id/chol1285)
   - Dananshan-Miao [hmon1338](http://glottolog.org/resource/languoid/id/hmon1338)
+  - Desiya [desi1235](http://glottolog.org/resource/languoid/id/desi1235)
   - Gamo-Gofa-Dawro [gamo1244](http://glottolog.org/resource/languoid/id/gamo1244)
   - Garasia [kukn1238](http://glottolog.org/resource/languoid/id/kukn1238)
   - Gascon [gasc1241](http://glottolog.org/resource/languoid/id/gasc1241)
@@ -50,9 +48,11 @@ Cite the source dataset as
   - Malinguat [mali1288](http://glottolog.org/resource/languoid/id/mali1288)
   - Mandayan [cata1284](http://glottolog.org/resource/languoid/id/cata1284)
   - Mengisa [meng1263](http://glottolog.org/resource/languoid/id/meng1263)
+  - Mixe-Quetzaltepec [quet1239](http://glottolog.org/resource/languoid/id/quet1239)
   - Natugu [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
   - Nitinat [noot1239](http://glottolog.org/resource/languoid/id/noot1239)
   - Provencal [prov1247](http://glottolog.org/resource/languoid/id/prov1247)
+  - Punan-Merah [puna1274](http://glottolog.org/resource/languoid/id/puna1274)
   - Rajbanshi [rajb1244](http://glottolog.org/resource/languoid/id/rajb1244)
   - Samre [samr1245](http://glottolog.org/resource/languoid/id/samr1245)
   - Sanapana [sana1281](http://glottolog.org/resource/languoid/id/sana1281)
@@ -65,6 +65,7 @@ Cite the source dataset as
   - Totonac-Upper-Necaxa [patl1234](http://glottolog.org/resource/languoid/id/patl1234)
   - Tunen [tune1241](http://glottolog.org/resource/languoid/id/tune1241)
   - Vatrata-Veraa [vatr1237](http://glottolog.org/resource/languoid/id/vatr1237)
+  - Wagawaga [waga1262](http://glottolog.org/resource/languoid/id/waga1262)
   - WestFrisian [west2863](http://glottolog.org/resource/languoid/id/west2863)
   - Xinca [xinc1247](http://glottolog.org/resource/languoid/id/xinc1247)
   - Yendang-Nyandang [yend1240](http://glottolog.org/resource/languoid/id/yend1240)
@@ -72,4 +73,4 @@ Cite the source dataset as
   - Yugh [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
 
-- Entries missing sources: 181893/181893 (100.00%)
+- Entries missing sources: 183947/183947 (100.00%)

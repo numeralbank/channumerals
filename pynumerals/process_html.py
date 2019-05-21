@@ -3,13 +3,14 @@ from clldutils.path import walk
 from pynumerals.number_parser import parse_number
 import re
 
-TABLE_IDENTIFIER = 'MsoTableGrid'
-SKIP = ['How-to-view-EN.htm', 'How-to-view-CH.htm', 'problem.html']
-ETHNOLOGUE = re.compile(r'http://www\.ethnologue\.com/')
+TABLE_IDENTIFIER = "MsoTableGrid"
+SKIP = ["How-to-view-EN.htm", "How-to-view-CH.htm", "problem.html"]
+
+ETHNOLOGUE = re.compile(r"(:?(http[s]?://)?www|archive)\.ethnologue\.(?:com|org)/", re.IGNORECASE)
 
 CODE_PATTERNS = [
-    re.compile('code=(?P<code>[a-zA-Z]{3})$'),
-    re.compile('language/(?P<code>[a-zA-Z]{3})($|/|-)'),
+    re.compile("code=(?P<code>[a-zA-Z]{3})$"),
+    re.compile("language/(?P<code>[a-zA-Z]{3})($|/|-)"),
 ]
 
 
@@ -20,8 +21,9 @@ def get_file_paths(raw_htmls):
     :param raw_htmls: Path to raw numerals HTML files.
     :return: A list of PosixPath() objects with path information for the files.
     """
-    return sorted([f for f in walk(raw_htmls)
-                   if f.suffix.startswith('.htm') and f.name not in SKIP])
+    return sorted(
+        [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
+    )
 
 
 def find_tables(file_paths):
@@ -34,9 +36,8 @@ def find_tables(file_paths):
     corresponding HTML file.
     """
     for f in file_paths:
-        parsed = BeautifulSoup(f.read_text(), 'html.parser')
-        yield (f.stem,
-               parsed.find_all('table', {'class': TABLE_IDENTIFIER}))
+        parsed = BeautifulSoup(f.read_text(), "html.parser")
+        yield (f.stem, parsed.find_all("table", {"class": TABLE_IDENTIFIER}))
 
 
 def find_number_table(table):
@@ -72,11 +73,11 @@ def parse_table(table):
     :param table: A numerals HTML table.
     :return: A list of strings with the elements and other literal information.
     """
-    table_elements = table.find_all('tr')
+    table_elements = table.find_all("tr")
     elements = []
 
     for row in table_elements:
-        cols = row.find_all('td')
+        cols = row.find_all("td")
         cols = [ele.text.strip() for ele in cols]
 
         for ele in cols:
@@ -113,14 +114,14 @@ def find_ethnologue_codes(tables):
     ethnologue_codes = []
 
     for table in tables:
-        link = table.find('a', href=ETHNOLOGUE)
+        link = table.find("a", href=ETHNOLOGUE)
         if link:
             for pattern in CODE_PATTERNS:
-                m = pattern.search(link['href'])
+                m = pattern.search(link["href"])
                 if m:
-                    ethnologue_codes.append(m.group('code').lower())
+                    ethnologue_codes.append(m.group("code").lower())
                     break
             else:
-                print(link['href'])
+                print(link["href"])
 
     return ethnologue_codes

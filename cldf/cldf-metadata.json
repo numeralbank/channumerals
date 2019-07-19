@@ -18,7 +18,7 @@
         {
             "dc:title": "environment",
             "properties": {
-                "glottolog_version": "v3.4",
+                "glottolog_version": "v4.0",
                 "concepticon_version": "v2.0"
             }
         }
@@ -26,7 +26,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 183947,
+            "dc:extent": 185556,
             "tableSchema": {
                 "columns": [
                     {
@@ -121,7 +121,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 3770,
+            "dc:extent": 3802,
             "tableSchema": {
                 "columns": [
                     {
@@ -187,7 +187,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#ParameterTable",
-            "dc:extent": 137,
+            "dc:extent": 138,
             "tableSchema": {
                 "columns": [
                     {

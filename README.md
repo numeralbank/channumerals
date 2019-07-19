@@ -12,9 +12,9 @@ Cite the source dataset as
 ![Concepticon: 84%](https://img.shields.io/badge/Concepticon-84%25-yellowgreen.svg "Concepticon: 84%")
 ![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
 
-- **Varieties:** 3,770
-- **Concepts:** 137
-- **Lexemes:** 183,947
+- **Varieties:** 3,802
+- **Concepts:** 138
+- **Lexemes:** 185,556
 - **Synonymy:** 1.37
 
 ## Possible Improvements:
@@ -73,4 +73,4 @@ Cite the source dataset as
   - Yugh [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
 
-- Entries missing sources: 183947/183947 (100.00%)
+- Entries missing sources: 185556/185556 (100.00%)

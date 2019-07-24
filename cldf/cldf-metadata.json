@@ -8,8 +8,8 @@
     "dc:isVersionOf": null,
     "dc:license": null,
     "dc:related": null,
-    "dc:title": "numerals",
-    "rdf:ID": "numerals",
+    "dc:title": "channumerals",
+    "rdf:ID": "channumerals",
     "rdf:type": "http://www.w3.org/ns/dcat#Distribution",
     "dialect": {
         "commentPrefix": null
@@ -26,7 +26,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 185556,
+            "dc:extent": 183396,
             "tableSchema": {
                 "columns": [
                     {
@@ -87,6 +87,10 @@
                     {
                         "datatype": "boolean",
                         "name": "Loan"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "SourceFile"
                     }
                 ],
                 "foreignKeys": [

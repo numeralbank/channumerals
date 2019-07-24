@@ -14,16 +14,22 @@ CODE_PATTERNS = [
 ]
 
 
-def get_file_paths(raw_htmls):
+def get_file_paths(raw_htmls, n=None):
     """
     Build a sorted list of PosixPath() objects for all files in the specified
     directory, e.g. numerals/raw/, skipping files defined in SKIP.
     :param raw_htmls: Path to raw numerals HTML files.
+    :param n: How many HTML files to process, useful for debugging.
     :return: A list of PosixPath() objects with path information for the files.
     """
-    return sorted(
-        [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
-    )
+    if n:
+        return sorted(
+            [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
+        )[:n]
+    else:
+        return sorted(
+            [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
+        )
 
 
 def find_tables(file_paths):
@@ -37,7 +43,7 @@ def find_tables(file_paths):
     """
     for f in file_paths:
         parsed = BeautifulSoup(f.read_text(), "html.parser")
-        yield (f.stem, parsed.find_all("table", {"class": TABLE_IDENTIFIER}))
+        yield (f.stem, parsed.find_all("table", {"class": TABLE_IDENTIFIER}), f.name)
 
 
 def find_number_table(table):

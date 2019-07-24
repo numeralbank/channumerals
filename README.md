@@ -1,4 +1,4 @@
-# numerals
+# channumerals
 
 Cite the source dataset as
 
@@ -14,8 +14,8 @@ Cite the source dataset as
 
 - **Varieties:** 3,802
 - **Concepts:** 138
-- **Lexemes:** 185,556
-- **Synonymy:** 1.37
+- **Lexemes:** 183,396
+- **Synonymy:** 1.36
 
 ## Possible Improvements:
 
@@ -73,4 +73,4 @@ Cite the source dataset as
   - Yugh [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
 
-- Entries missing sources: 185556/185556 (100.00%)
+- Entries missing sources: 183396/183396 (100.00%)

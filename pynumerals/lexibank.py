@@ -1,13 +1,27 @@
+import re
+
+import attr
 from clldutils.path import Path
 from pylexibank.dataset import Dataset as BaseDataset
+from pylexibank.dataset import Lexeme
+
+from pynumerals.helper import int_to_en
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
-from pynumerals.helper import int_to_en
+
+
+@attr.s
+class NumeralsLexeme(Lexeme):
+    SourceFile = attr.ib(default=None)
 
 
 class Dataset(BaseDataset):
-    id = "numerals"
+    # TODO: Change splitting class.
+
+    id = "channumerals"
     dir = Path(__file__).parent.parent
+
+    lexeme_class = NumeralsLexeme
 
     def cmd_download(self, **kw):
         pass
@@ -28,6 +42,7 @@ class Dataset(BaseDataset):
             entry = NumeralsEntry(
                 base_name=table_set[0],
                 tables=table_set[1],
+                file_name=table_set[2],
                 codes=glottolog_codes,
                 iso=glottolog_iso,
             )
@@ -68,14 +83,20 @@ class Dataset(BaseDataset):
                                 )
 
                             if v:
-                                clean = v[0].replace("\n", "").replace("\t", "")
+                                value = v[0].replace("\n", "").replace("\t", "")
+                                m = re.search(r'\(([^)]+)', value)
 
-                                # Find () expressions in clean and use them to
-                                # separate, everything not in ( ) is lexeme,
-                                # everything else is comment.
+                                if m:
+                                    comment = m.group(1).strip()
+                                    value = value.split("(")
+                                    value = value[0]
+                                else:
+                                    comment = None
 
                                 ds.add_lexemes(
-                                    Value=clean,
+                                    Value=value,
                                     Parameter_ID=str(k),
                                     Language_ID=entry.glottocodes[0],
+                                    Comment=comment,
+                                    SourceFile=entry.file_name
                                 )

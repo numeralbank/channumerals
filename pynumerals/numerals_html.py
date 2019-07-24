@@ -8,6 +8,7 @@ from pynumerals.number_parser import parse_number
 @attr.s
 class NumeralsEntry:
     base_name = attr.ib(default=None)
+    file_name = attr.ib(default=None)
     tables = attr.ib(default=None)
     codes = attr.ib(default=None)
     iso = attr.ib(default=None)
@@ -26,6 +27,11 @@ class NumeralsEntry:
             codes=self.codes,
             iso=self.iso,
         ).candidates
+
+        # Clean-up
+        del self.ethnologue_codes
+        del self.codes
+        del self.iso
 
     def get_numeral_lexemes(self):
         varieties = []

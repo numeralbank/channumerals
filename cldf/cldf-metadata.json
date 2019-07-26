@@ -1,13 +1,8 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
-    "aboutUrl": null,
     "dc:bibliographicCitation": "",
     "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#Wordlist",
-    "dc:description": null,
     "dc:identifier": "",
-    "dc:isVersionOf": null,
-    "dc:license": null,
-    "dc:related": null,
     "dc:title": "channumerals",
     "rdf:ID": "channumerals",
     "rdf:type": "http://www.w3.org/ns/dcat#Distribution",
@@ -18,15 +13,15 @@
         {
             "dc:title": "environment",
             "properties": {
-                "glottolog_version": "v4.0",
-                "concepticon_version": "v2.0"
+                "glottolog_version": "v4.0-19-gcdae5a39bf",
+                "concepticon_version": "v2.1.0"
             }
         }
     ],
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 183396,
+            "dc:extent": 183462,
             "tableSchema": {
                 "columns": [
                     {
@@ -125,7 +120,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 3802,
+            "dc:extent": 3803,
             "tableSchema": {
                 "columns": [
                     {

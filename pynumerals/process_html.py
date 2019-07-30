@@ -4,31 +4,47 @@ from pynumerals.number_parser import parse_number
 import re
 
 TABLE_IDENTIFIER = "MsoTableGrid"
-SKIP = ["How-to-view-EN.htm", "How-to-view-CH.htm", "problem.html"]
+SKIP = [
+    "How-to-view-EN.htm",
+    "How-to-view-CH.htm",
+    "problem.html",
+    "index.html",
+    "index_old.html",
+    "eugenechan.htm",
+    "home-Chinese.html",
+    "home.html",
+    ]
+SKIP_RE = re.compile(r"(?i)question")
 
 ETHNOLOGUE = re.compile(r"(:?(http[s]?://)?www|archive)\.ethnologue\.(?:com|org)/", re.IGNORECASE)
 
 CODE_PATTERNS = [
-    re.compile("code=(?P<code>[a-zA-Z]{3})$"),
-    re.compile("language/(?P<code>[a-zA-Z]{3})($|/|-)"),
+    re.compile("code=(?P<code>[a-zA-Z]{3})"),
+    re.compile("language/(?P<code>[a-zA-Z]{3})"),
 ]
 
 
 def get_file_paths(raw_htmls, n=None):
     """
     Build a sorted list of PosixPath() objects for all files in the specified
-    directory, e.g. numerals/raw/, skipping files defined in SKIP.
+    directory, e.g. numerals/raw/, skipping files defined in SKIP and as SKIP_RE.
     :param raw_htmls: Path to raw numerals HTML files.
     :param n: How many HTML files to process, useful for debugging.
     :return: A list of PosixPath() objects with path information for the files.
     """
     if n:
         return sorted(
-            [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
+            [f for f in walk(raw_htmls) if\
+                f.suffix.startswith(".htm") and\
+                f.name not in SKIP and\
+                not re.search(SKIP_RE, f.name)]
         )[:n]
     else:
         return sorted(
-            [f for f in walk(raw_htmls) if f.suffix.startswith(".htm") and f.name not in SKIP]
+            [f for f in walk(raw_htmls) if\
+                f.suffix.startswith(".htm") and\
+                f.name not in SKIP and\
+                not re.search(SKIP_RE, f.name)]
         )
 
 

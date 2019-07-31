@@ -3,7 +3,7 @@ from clldutils.path import walk
 from pynumerals.number_parser import parse_number
 import re
 
-TABLE_IDENTIFIER = "MsoTableGrid"
+TABLE_IDENTIFIER = ["MsoTableGrid", "a"]
 SKIP = [
     "How-to-view-EN.htm",
     "How-to-view-CH.htm",
@@ -13,6 +13,8 @@ SKIP = [
     "eugenechan.htm",
     "home-Chinese.html",
     "home.html",
+    "Comments-6-Oct-2008.htm",
+    "blank.html",
     ]
 SKIP_RE = re.compile(r"(?i)question")
 

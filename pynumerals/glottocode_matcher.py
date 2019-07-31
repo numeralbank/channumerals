@@ -34,4 +34,8 @@ class GlottocodeMatcher:
             if candidates:
                 candidates = [candidates[0][0]]
 
+            if not candidates and self.ethnologue_codes:
+                print("Found ISO code %s (%s) but no Glottocode" % 
+                        (','.join(set(self.ethnologue_codes)), self.base_name))
+
         self.candidates = candidates

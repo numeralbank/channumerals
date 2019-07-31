@@ -58,6 +58,9 @@ class Dataset(BaseDataset):
                         Name=entry.base_name,
                         Glottocode=entry.glottocodes[0],
                     )
+                else:
+                    if len(entry.get_numeral_lexemes()):
+                        print("No glottocode for %s" % (entry.base_name))
 
             for entry in entries:
                 number_lexemes = entry.get_numeral_lexemes()

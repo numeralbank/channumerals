@@ -21,7 +21,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 185664,
+            "dc:extent": 185744,
             "tableSchema": {
                 "columns": [
                     {
@@ -120,7 +120,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 3849,
+            "dc:extent": 3850,
             "tableSchema": {
                 "columns": [
                     {

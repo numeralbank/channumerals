@@ -12,7 +12,7 @@ Cite the source dataset as
 ![Concepticon: 84%](https://img.shields.io/badge/Concepticon-84%25-yellowgreen.svg "Concepticon: 84%")
 ![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
 
-- **Varieties:** 3,850
+- **Varieties:** 3,851
 - **Concepts:** 138
 - **Lexemes:** 185,868
 - **Synonymy:** 1.36

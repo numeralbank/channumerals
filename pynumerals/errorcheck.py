@@ -1,20 +1,24 @@
 
-def _check_fullstop(value):
+def error_fullstop(value):
     """Checks whether there is a fullstop"""
     return "." in value
 
 
-def _check_loanword(value):
+def error_loanword(value):
     """Checks whether the item is an unidentified loanword"""
-    return '>' in value
+    return '<' in value
 
 
-def _check_is_language(value):
+_languages_to_check = [
+    'english', 'french', 'german', 'spanish', 'portuguese', 'sanskrit', 'dutch'
+]
+
+def error_is_language(value):
     """Checks if the value points to another language"""
-    return value.lower in ['english', 'french', 'german', 'spanish', 'portuguese']
+    return value.lower() in _languages_to_check
 
 
-def _check_is_numeric(value):
+def error_is_numeric(value):
     """Checks if the value is only numerical"""
     try:
         int(value)
@@ -23,16 +27,16 @@ def _check_is_numeric(value):
         return False
 
 
-def _check_or(value):
+def error_or(value):
     return ' or ' in value
 
 
-_checkers = [
-     _check_fullstop,
-     _check_loanword,
-     _check_is_numeric,
-     _check_is_language,
-     _check_or,
+errors = [
+     error_fullstop,
+     error_loanword,
+     error_is_numeric,
+     error_is_language,
+     error_or,
 ]
 
 
@@ -42,7 +46,7 @@ def check(value):
     
     Returns True if the entry is flagged as problematic
     """
-    for c in _checkers:
+    for c in errors:
         if c(value):
             return True
     return False

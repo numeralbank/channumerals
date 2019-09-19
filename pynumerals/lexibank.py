@@ -9,14 +9,23 @@ from pynumerals.helper import int_to_en
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
 
-from errorcheck import check
+from errorcheck import errorchecks
 
 
 @attr.s
 class NumeralsLexeme(Lexeme):
     SourceFile = attr.ib(default=None)
-    Problematic = attr.ib(default=False)
+    Problematic = attr.ib(init=False)
 
+    def __attrs_post_init__(self):
+        self.Problematic = False
+        for check in errorchecks:
+            if check(self.Value):
+                self.Problematic = True
+                break
+        
+        
+        
 
 class Dataset(BaseDataset):
     # TODO: Change splitting class.

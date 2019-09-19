@@ -1,7 +1,7 @@
 
 def error_fullstop(value):
-    """Checks whether there is a fullstop"""
-    return "." in value
+    """Checks whether there is a fullstop after a digit"""
+    return bool(re.match(r'.*\d+\.', value))
 
 
 def error_loanword(value):

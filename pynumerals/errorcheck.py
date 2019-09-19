@@ -4,8 +4,15 @@ def _check_fullstop(value):
     return "." in value
 
 
+def _check_loanword(value):
+    """Checks whether the item is an unidentified loanword"""
+    return '>' in value
+
+
+
 _checkers = [
      _check_fullstop,
+     _check_loanword,
      
 ]
 

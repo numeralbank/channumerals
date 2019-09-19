@@ -9,10 +9,13 @@ from pynumerals.helper import int_to_en
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
 
+from errorcheck import check
+
 
 @attr.s
 class NumeralsLexeme(Lexeme):
     SourceFile = attr.ib(default=None)
+    Problematic = attr.ib(default=False)
 
 
 class Dataset(BaseDataset):
@@ -101,5 +104,6 @@ class Dataset(BaseDataset):
                                     Parameter_ID=str(k),
                                     Language_ID=entry.glottocodes[0],
                                     Comment=comment,
-                                    SourceFile=entry.file_name
+                                    SourceFile=entry.file_name,
+                                    Problematic=check(value)
                                 )

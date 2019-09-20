@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-from pynumerals.errorcheck import check
 from pynumerals.errorcheck import error_fullstop
 from pynumerals.errorcheck import error_loanword
 from pynumerals.errorcheck import error_is_numeric
@@ -10,8 +9,9 @@ from pynumerals.errorcheck import error_or
 
 
 def test_error_fullstop():
-    assert error_fullstop("lima.")
+    assert error_fullstop("1. lima")
     assert not error_fullstop("lima")
+    assert not error_fullstop("li.ma")
 
 
 def test_error_loanword():
@@ -34,7 +34,3 @@ def test_error_or():
     assert not error_or("lima")
     assert not error_or("liorma")
 
-
-def test_check():
-    assert check("lima.")  # fails error_fullstop
-    assert not check("lima")

@@ -1,3 +1,4 @@
+import re
 
 def error_fullstop(value):
     """Checks whether there is a fullstop after a digit"""
@@ -31,22 +32,10 @@ def error_or(value):
     return ' or ' in value
 
 
-errors = [
+errorchecks = [
      error_fullstop,
      error_loanword,
      error_is_numeric,
      error_is_language,
      error_or,
 ]
-
-
-def check(value):
-    """
-    Error Checking function.
-    
-    Returns True if the entry is flagged as problematic
-    """
-    for c in errors:
-        if c(value):
-            return True
-    return False

@@ -8,14 +8,17 @@ from pylexibank.dataset import Lexeme
 from pynumerals.helper import int_to_en
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
+from pynumerals.value_parser import value_parser
 
-from errorcheck import errorchecks
+from pynumerals.errorcheck import errorchecks
 
 
 @attr.s
 class NumeralsLexeme(Lexeme):
     SourceFile = attr.ib(default=None)
     Problematic = attr.ib(init=False)
+    Other_Form = attr.ib(default=None)
+    Variant_ID = attr.ib(default=1)
 
     def __attrs_post_init__(self):
         self.Problematic = False
@@ -23,9 +26,9 @@ class NumeralsLexeme(Lexeme):
             if check(self.Value):
                 self.Problematic = True
                 break
-        
-        
-        
+        if not self.Problematic and self.Other_Form and '<' in self.Other_Form:
+            self.Problematic = True
+
 
 class Dataset(BaseDataset):
     # TODO: Change splitting class.
@@ -79,40 +82,46 @@ class Dataset(BaseDataset):
 
                 for variety in number_lexemes:
                     if entry.glottocodes:
-                        for k, v in variety.items():
-                            meaning_n = str(k)
+                        for var_id, var in variety.items():
+                            for k, vs in var.items():
+                                meaning_n = str(k)
+                                for v in vs:
+                                    if meaning_n not in meaning_map:
+                                        meaning_map[meaning_n] = str(k)
 
-                            if meaning_n not in meaning_map:
-                                meaning_map[meaning_n] = str(k)
+                                        ds.add_concept(
+                                            ID=meaning_map[meaning_n],
+                                            Name=meaning_n,
+                                            Concepticon_ID=concept_map.get(int_to_en(k).upper()),
+                                        )
+                                    else:
+                                        ds.add_concept(
+                                            ID=meaning_map[meaning_n],
+                                            Name=meaning_n,
+                                            Concepticon_ID=concept_map.get(int_to_en(k).upper()),
+                                        )
 
-                                ds.add_concept(
-                                    ID=meaning_map[meaning_n],
-                                    Name=str(k),
-                                    Concepticon_ID=concept_map.get(int_to_en(k).upper()),
-                                )
-                            else:
-                                ds.add_concept(
-                                    ID=meaning_map[meaning_n],
-                                    Name=str(k),
-                                    Concepticon_ID=concept_map.get(int_to_en(k).upper()),
-                                )
+                                    if v:
+                                        value = v.replace("\n", "").replace("\t", "")
+                                        # after 2 or more non break spaces follows a comment
+                                        if '(' not in value:
+                                            value = re.sub(r'^(.*?) {2,}(.*)$', '\\1 (\\2)', value)
+                                        # replace non break space by spaces
+                                        value = value.replace(" ", " ")
+                                        # put single string 'foo = IPA' into brackets
+                                        if '=' in value and not '(' in value:
+                                            value = re.sub(r'^(.*?)\s(\S+\s*=\s*IPA.*)$', '\\1 (\\2)', value)
 
-                            if v:
-                                value = v[0].replace("\n", "").replace("\t", "")
-                                m = re.search(r'\(([^)]+)', value)
+                                        value, comment, other_form, loan = value_parser(value)
 
-                                if m:
-                                    comment = m.group(1).strip()
-                                    value = value.split("(")
-                                    value = value[0]
-                                else:
-                                    comment = None
-
-                                ds.add_lexemes(
-                                    Value=value,
-                                    Parameter_ID=str(k),
-                                    Language_ID=entry.glottocodes[0],
-                                    Comment=comment,
-                                    SourceFile=entry.file_name,
-                                    Problematic=check(value)
-                                )
+                                        if value:
+                                            ds.add_lexemes(
+                                                Value=value,
+                                                Parameter_ID=meaning_n,
+                                                Variant_ID = (var_id+1),
+                                                Language_ID=entry.glottocodes[0],
+                                                Comment=comment,
+                                                SourceFile=entry.file_name,
+                                                Other_Form = other_form,
+                                                Loan = loan
+                                            )

@@ -44,7 +44,7 @@ _blacklist = [
     'lit.', 'lit:', 'litː', 'litt.', 'litt:', 'literally', ' are ', ' is a ', ' hand ', ' hands', ' feet ', ' foot ',
     ' x ', '. ', 'borrow', 'numeral', 'used', 'other', 'number', 'used ', 'formerly', 'complex', 'from ',
     'only', 'morph', 'which', ' not ', 'mean', 'note', 'probably', 'finger', 'animate', 'masc', 'femin', 'fem.',
-    'missing', 'Ø',
+    'missing', 'Ø', 'elbow', 'joint', "'and'", 'alternative', 'midway', 'lower',
     'english', 'french', 'german', 'spanish', 'portuguese', 'sanskrit', 'dutch', 'quechua',
     'arabic', 'hinid', 'chinese', 'tok pisin', 'swahili', 'bislama'
 ]

@@ -35,6 +35,12 @@ def value_parser(value):
                         break
             comment = val[len(val)-i-1:].strip()
             val = val[0:(len(val)-i-1)].strip()
+    # comment phase 2
+    m = re.search(r'^(.*?)\s+(\(.*?\))\s*$', val)
+    if m:
+        val = m.groups()[0].strip()
+        comment = "%s %s" % (comment, m.groups()[1].strip())
+        comment = comment.strip()
 
     # check for loans
     if comment:
@@ -55,6 +61,16 @@ def value_parser(value):
 
     val = re.sub(r'\s*[\*<]+$', '', val.strip()) # remove trailing *, <
     val = re.sub(r' {2,}', ' ', val)
+
+    comment = ', '.join(com)
+    # comment phase 3
+    m = re.search(r'^(.*?)\s+(\(.*?\))\s*$', val)
+    if m:
+        val = m.groups()[0].strip()
+        comment = "%s %s" % (comment, m.groups()[1].strip())
+        comment = comment.strip()
+
     val = re.sub(r'\s*\(\s*$', '', val).strip()
 
-    return val, ', '.join(com), other_form, loan
+
+    return val, comment, other_form, loan

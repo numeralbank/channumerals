@@ -14,7 +14,7 @@ Cite the source dataset as
 
 - **Varieties:** 3,871
 - **Concepts:** 138
-- **Lexemes:** 189,227
+- **Lexemes:** 189,236
 - **Synonymy:** 1.37
 
 ## Possible Improvements:
@@ -73,4 +73,4 @@ Cite the source dataset as
   - Yugh [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
 
-- Entries missing sources: 189227/189227 (100.00%)
+- Entries missing sources: 189236/189236 (100.00%)

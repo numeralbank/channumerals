@@ -106,6 +106,9 @@ class Dataset(BaseDataset):
                                         # after 2 or more non break spaces follows a comment
                                         if '(' not in value:
                                             value = re.sub(r'^(.*?) {2,}(.*)$', '\\1 (\\2)', value)
+                                        # after an em dash follows a comment
+                                        if '(' not in value:
+                                            value = re.sub(r'^(.*?)\s*–\s*(.*)$', '\\1 (\\2)', value)
                                         # replace non break space by spaces
                                         value = value.replace(" ", " ")
                                         # put single string 'foo = IPA' into brackets

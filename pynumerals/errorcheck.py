@@ -11,9 +11,9 @@ def error_loanword(value):
 
 
 def error_is_numeric(value):
-    """Checks if the value is only numerical"""
+    """Removes ' and checks if the value is only numerical"""
     try:
-        int(value)
+        int(value.replace("'", ""))
         return True
     except:
         return False
@@ -40,11 +40,11 @@ def error_has_gloss(value):
 
 
 _blacklist = [
-    ' or ', ' also ', '[', ']', '>', '{', '}', ' = ', '?', '..', '+', ' ‘', '*', '~', '/', '→',
+    ' or ', ' also ', '[', ']', '>', '{', '}', ' = ', '?', '..', '+', ' ‘', '*', '~', '/', '→', '“', "''", ',', '“', '”',
     'lit.', 'lit:', 'litː', 'litt.', 'litt:', 'literally', ' are ', ' is a ', ' hand ', ' hands', ' feet ', ' foot ',
-    ' x ', '. ', 'borrow', 'numeral', 'used', 'other', 'number', 'used ', 'formerly', 'complex', 'from ',
+    ' x ', '. ', 'borrow', 'numeral', 'used', 'other', 'number', 'used ', 'formerly', 'complex', 'from ', '(L',
     'only', 'morph', 'which', ' not ', 'mean', 'note', 'probably', 'finger', 'animate', 'masc', 'femin', 'fem.',
-    'missing', 'Ø', 'elbow', 'joint', "'and'", 'alternative', 'midway', 'lower',
+    'missing', 'Ø', 'elbow', 'joint', "'and'", 'alternative', 'midway', 'lower', '-are-', 'one.',
     'english', 'french', 'german', 'spanish', 'portuguese', 'sanskrit', 'dutch', 'quechua',
     'arabic', 'hinid', 'chinese', 'tok pisin', 'swahili', 'bislama'
 ]
@@ -52,7 +52,7 @@ _blacklistCS = [
     'IPA'
 ]
 _blacklistIS = [
-    '-', "'", 'k', '́'
+    '-', "'", 'k', '́', '～', "'", 'n', 'j', 'Ø', 'F', 'M', 'r'
 ]
 def error_has_blacklist_item(value):
     v = value.lower()

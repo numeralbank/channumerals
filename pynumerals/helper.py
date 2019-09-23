@@ -42,6 +42,9 @@ def int_to_en(num):
 
     assert 0 <= num
 
+    if int(num) != num:
+        return 'problem'
+
     if num < 20:
         return int_to_english[num]
 

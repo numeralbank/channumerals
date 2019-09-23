@@ -82,9 +82,7 @@ def find_number_table(table):
         except ValueError:
             pass
 
-    # TODO: Check the sanity of this assumption.
-    # We assume that we've found a number table if the list of numbers is >= 10.
-    if len(numbers) >= 10:
+    if len(numbers):
         return True
     else:
         return False

@@ -41,18 +41,22 @@ def error_has_gloss(value):
 
 _blacklist = [
     ' or ', ' also ', '[', ']', '>', '{', '}', ' = ', '?', '..', '+', ' ‘', '*', '~', '/', '→', '“', "''", ',', '“', '”',
-    'lit.', 'lit:', 'litː', 'litt.', 'litt:', 'literally', ' are ', ' is a ', ' hand ', ' hands', ' feet ', ' foot ',
-    ' x ', '. ', 'borrow', 'numeral', 'used', 'other', 'number', 'used ', 'formerly', 'complex', 'from ', '(L',
-    'only', 'morph', 'which', ' not ', 'mean', 'note', 'probably', 'finger', 'animate', 'masc', 'femin', 'fem.',
-    'missing', 'Ø', 'elbow', 'joint', "'and'", 'alternative', 'midway', 'lower', '-are-', 'one.',
+    'lit.', 'lit:', 'litː', 'litt.', 'litt:', 'literally', ' are ', ' is a ', ' hand ', ' hands', ' feet ', ' foot ', 'var.',
+    ' x ', '. ', 'borrow', 'numeral', 'used', 'other', 'number', 'used ', 'formerly', 'complex', 'from ', '(L', 'pattern',
+    'only', 'morph', 'which', ' not ', 'mean', 'note', 'probably', 'finger', 'animate', 'masc', 'femin', 'fem.', 'hhf',
+    'same as', 'clock', 'clten', 'clfour', 'no data',
+    'missing', 'Ø', 'elbow', 'joint', "'and'", 'alternative', 'midway', 'lower', '-are-', 'one.', 'unknown', 'lingua', 'DBː',
     'english', 'french', 'german', 'spanish', 'portuguese', 'sanskrit', 'dutch', 'quechua',
-    'arabic', 'hinid', 'chinese', 'tok pisin', 'swahili', 'bislama'
+    'arabic', 'hindi', 'chinese', 'tok pisin', 'top pisin', 'swahili', 'bislama', 'shipibo', 'pidgin'
 ]
 _blacklistCS = [
     'IPA'
 ]
 _blacklistIS = [
-    '-', "'", 'k', '́', '～', "'", 'n', 'j', 'Ø', 'F', 'M', 'r'
+    '-', "'", 'k', '́', '～', "'", 'n', 'j', 'Ø', 'F', 'M', 'r', 'Ar.', 'China'
+]
+_blacklistSW = [
+    'or '
 ]
 def error_has_blacklist_item(value):
     v = value.lower()
@@ -64,6 +68,9 @@ def error_has_blacklist_item(value):
             return True
     for b in _blacklistIS:
         if b == value:
+            return True
+    for b in _blacklistSW:
+        if value.startswith(b):
             return True
     return False
 

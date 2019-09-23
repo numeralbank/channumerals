@@ -5,7 +5,21 @@ def value_parser(value):
     other_form = None
     loan = False
     val = re.sub(r'\s*\*+$', '', value.strip()) # remove trailing *
-    val = val.replace("", "").replace("", "").replace("", "") # remove private area chars (tone markers)
+
+    # replace Charis SIL PUA characters
+    val = val.replace("","\u1DC4") # U+F171 -> COMBINING MACRON-ACUTE
+    val = val.replace("","\u1DC5") # U+F172 -> COMBINING GRAVE-MACRON
+    val = val.replace("","\u1DC6") # U+F173 -> COMBINING MACRON-GRAVE
+    val = val.replace("","\u1DC7") # U+F174 -> COMBINING ACUTE-MACRON
+    val = val.replace("","ꜛ") # U+F19C
+    val = val.replace("","ꜜ") # U+F19D
+    val = val.replace("","ȼ") # U+F20B
+    val = val.replace("","ᵬ") # U+F249
+    val = val.replace("","ᵭ") # U+F24A
+
+    # actually: MODIFIER LETTER SMALL RAMS HORN - no Unicode code point yet
+    # found in language Kodia only
+    val = val.replace("","ɤ") # U+F1B5
 
     if len(val) > 2:
         if val[0] == '[' and val[-1] == ']':

@@ -4,7 +4,7 @@ import re
 
 PATTERN = r"""(?x)
     ^
-    [^\d+-\.]*
+    \s*
     (?P<number>
         (?P<sign>[+-])?
         (?P<integer_part>
@@ -32,7 +32,7 @@ PATTERN = r"""(?x)
             \d+
         )?
     )
-    [^\d]*
+    \s*[\.:ː]
 """
 
 

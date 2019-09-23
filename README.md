@@ -12,10 +12,10 @@ Cite the source dataset as
 ![Concepticon: 84%](https://img.shields.io/badge/Concepticon-84%25-yellowgreen.svg "Concepticon: 84%")
 ![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
 
-- **Varieties:** 3,871
-- **Concepts:** 138
-- **Lexemes:** 189,236
-- **Synonymy:** 1.37
+- **Varieties:** 4,137
+- **Concepts:** 95
+- **Lexemes:** 191,062
+- **Synonymy:** 1.39
 
 ## Possible Improvements:
 
@@ -39,6 +39,7 @@ Cite the source dataset as
   - Gelao-Bigong [gela1261](http://glottolog.org/resource/languoid/id/gela1261)
   - Inpui-Naga [inpu1234](http://glottolog.org/resource/languoid/id/inpu1234)
   - Izere [izer1243](http://glottolog.org/resource/languoid/id/izer1243)
+  - Jaruara [jaru1257](http://glottolog.org/resource/languoid/id/jaru1257)
   - Karen-Lahtha [laht1236](http://glottolog.org/resource/languoid/id/laht1236)
   - Katingan [kati1278](http://glottolog.org/resource/languoid/id/kati1278)
   - Khao [khao1244](http://glottolog.org/resource/languoid/id/khao1244)
@@ -50,7 +51,9 @@ Cite the source dataset as
   - Mengisa [meng1263](http://glottolog.org/resource/languoid/id/meng1263)
   - Mixe-Quetzaltepec [quet1239](http://glottolog.org/resource/languoid/id/quet1239)
   - Natugu [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
+  - Ngarla [ngar1286](http://glottolog.org/resource/languoid/id/ngar1286)
   - Nitinat [noot1239](http://glottolog.org/resource/languoid/id/noot1239)
+  - Phangduwali-Mugali [phan1256](http://glottolog.org/resource/languoid/id/phan1256)
   - Provencal [prov1247](http://glottolog.org/resource/languoid/id/prov1247)
   - Punan-Merah [puna1274](http://glottolog.org/resource/languoid/id/puna1274)
   - Rajbanshi [rajb1244](http://glottolog.org/resource/languoid/id/rajb1244)
@@ -73,4 +76,4 @@ Cite the source dataset as
   - Yugh [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
 
-- Entries missing sources: 189236/189236 (100.00%)
+- Entries missing sources: 191062/191062 (100.00%)

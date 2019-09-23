@@ -53,11 +53,10 @@ class NumeralsEntry:
                 except ValueError:  # Most likely runaway tables.
                     continue
 
-                p = re.compile("%s\s*\.\s*" % (str(parsed_entry)))
-                e = p.sub('', entry)
-                e = re.sub('\s~\s', '/', e) # split alternative forms
-                e = re.sub('\s*～\s*', '/', e) # split alternative forms
-                e = re.sub('/n$', '(n)', e)
+                e = re.sub(r'^\s*[\d,]+\s*[\.:ː]\s*', '', entry)
+                e = re.sub(r'\s~\s', '/', e) # split alternative forms
+                e = re.sub(r'\s*～\s*', '/', e) # split alternative forms
+                e = re.sub(r'/n$', '(n)', e)
                 lex = list(filter(None, split_text_with_context(e, separators='/,;，', brackets=_BRACKETS)))
                 n[i][parsed_entry] = [clean.strip() for clean in lex]
 

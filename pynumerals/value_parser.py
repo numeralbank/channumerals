@@ -1,11 +1,14 @@
 import re
+from pynumerals.config import CHAR_REPL
 
 def value_parser(value):
 
     other_form = None
     loan = False
     val = re.sub(r'\s*\*+$', '', value.strip()) # remove trailing *
-    val = val.replace("", "").replace("", "").replace("", "") # remove private area chars (tone markers)
+    
+    for k, v in CHAR_REPL.items():
+        val = val.replace(k, v)
 
     if len(val) > 2:
         if val[0] == '[' and val[-1] == ']':

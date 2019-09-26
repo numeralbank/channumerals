@@ -21,7 +21,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 186001,
+            "dc:extent": 185937,
             "tableSchema": {
                 "columns": [
                     {
@@ -188,6 +188,10 @@
                     {
                         "datatype": "string",
                         "name": "SourceFile"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Contributor"
                     }
                 ],
                 "primaryKey": [

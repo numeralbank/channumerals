@@ -16,6 +16,7 @@ from pynumerals.errorcheck import errorchecks
 @attr.s
 class NumeralsLanguage(Language):
     SourceFile = attr.ib(default=None)
+    Contributor = attr.ib(default=None)
 
 @attr.s
 class NumeralsLexeme(Lexeme):
@@ -50,6 +51,7 @@ class Dataset(BaseDataset):
         unknown_gc_cnt = 0
 
         html_files = get_file_paths(self.raw)
+        # html_files = get_file_paths(Path('/Users/bibiko/Documents/Developments/forks/channumerals/raw1'))
         tables = find_tables(html_files)
         glottolog_codes = self.glottolog.languoids_by_code()
         glottolog_iso = self.glottolog.iso.languages
@@ -68,6 +70,7 @@ class Dataset(BaseDataset):
                 codes=glottolog_codes,
                 iso=glottolog_iso,
                 title_name=table_set[3],
+                source=table_set[4],
             )
             entries.append(entry)
 
@@ -106,12 +109,20 @@ class Dataset(BaseDataset):
                             seen_lg_names[lg_name] = []
                         seen_lg_names[lg_name].append(entry.file_name)
 
+                        # build Contributor name
+                        if var_id < len(entry.source):
+                            contrib = entry.source[var_id]
+                        else:
+                            contrib = None
+                            print("check contributor for %s" % ("%s-%i" % (lang_id_prefix, var_id+1)))
+
                         ds.add_language(
                             ID="%s-%i" % (lang_id_prefix, var_id+1),
                             Name=lg_name,
                             Glottocode=gc,
                             ISO639P3code=entry.ethnologue_codes[0],
                             SourceFile=entry.file_name,
+                            Contributor=contrib
                         )
 
                         for k, vs in var.items():
@@ -158,7 +169,23 @@ class Dataset(BaseDataset):
                                             Other_Form = other_form,
                                             Loan = loan,
                                         )
-        for k,v in seen_lg_names.items():
-            s = set(v)
-            if len(s) > 1:
-                print(s)
+
+            def _x(s):
+                try:
+                    return int(s)
+                except:
+                    return s
+
+            ds.objects['FormTable'] = sorted(ds.objects['FormTable'],
+                    key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+            ds.objects['LanguageTable'] = sorted(ds.objects['LanguageTable'],
+                    key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+            ds.objects['ParameterTable'] = sorted(ds.objects['ParameterTable'],
+                    key=lambda item: int(item['ID']))
+
+        if seen_lg_names:
+            print('check these files for duplicates:')
+            for k,v in seen_lg_names.items():
+                s = set(v)
+                if len(s) > 1:
+                    print(s)

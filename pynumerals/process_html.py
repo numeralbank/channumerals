@@ -261,6 +261,10 @@ SKIP = [
     "Yang Zhuang.htm", # Zhuang-Yang.htm
     "Yanggao-Miao.htm", # Yanghao-Miao.htm
     "Yau-PNG.htm", # Yau-Morobe.htm
+    "Yau-PNG.htm", # Yau-Morobe.htm
+    "Yucuna.html", # Yucuna.htm
+    "Sakirabia.htm", # Sakirabia-Mekens.htm
+    "Mawe.htm", # Satere-Mawe.htm
     ]
 SKIP_RE = re.compile(r"(?i)question")
 
@@ -276,6 +280,13 @@ TITLE_PATTERNS = [
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*Refer", flags=re.I),
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?) {3,}", flags=re.I),
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
+]
+
+CONTRIB_PATTERNS = [
+    re.compile("linguists?\s+providing\s+data\s+and\s+date\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
+    re.compile("linguists?\s+providing\s+data\s+and\s+date\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
+    re.compile("data?\s+source\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
+    re.compile("data?\s+source\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
 ]
 
 def get_file_paths(raw_htmls, n=None):
@@ -316,6 +327,7 @@ def find_tables(file_paths):
     for f in file_paths:
         parsed = BeautifulSoup(f.read_text(), "html.parser")
         sf_names = []
+        contributors = []
         for p in parsed.find_all("p"):
             t = re.sub(r'[\n\r\t ]+', ' ', p.get_text())
             for pattern in TITLE_PATTERNS:
@@ -324,7 +336,16 @@ def find_tables(file_paths):
                     n = re.sub(r' {2,}', ' ', m.group("name")).strip()
                     sf_names.append(re.sub(r'\s*,$', '', n))
                     break
-        yield (f.stem, parsed.find_all("table", {"class": TABLE_IDENTIFIER}), f.name, sf_names)
+        all_tables = parsed.find_all("table", {"class": TABLE_IDENTIFIER})
+        for tbl in all_tables:
+            t = re.sub(r'[\n\r\t ]+', ' ', tbl.get_text())
+            for pattern in CONTRIB_PATTERNS:
+                m = pattern.search(t)
+                if m:
+                    n = re.sub(r' {2,}', ' ', m.group("name")).strip()
+                    contributors.append(n)
+                    break
+        yield (f.stem, all_tables, f.name, sf_names, contributors)
 
 
 def find_number_table(table):

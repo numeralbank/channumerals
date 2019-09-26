@@ -20,6 +20,7 @@ class NumeralsEntry:
     tables = attr.ib(default=None)
     codes = attr.ib(default=None)
     iso = attr.ib(default=None)
+    title_name = attr.ib(default=None)
 
     number_tables = attr.ib(init=False)
     other_tables = attr.ib(init=False)
@@ -37,7 +38,6 @@ class NumeralsEntry:
         ).candidates
 
         # Clean-up
-        del self.ethnologue_codes
         del self.codes
         del self.iso
 

@@ -21,7 +21,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 191062,
+            "dc:extent": 186001,
             "tableSchema": {
                 "columns": [
                     {
@@ -85,10 +85,6 @@
                     },
                     {
                         "datatype": "string",
-                        "name": "SourceFile"
-                    },
-                    {
-                        "datatype": "string",
                         "name": "Problematic"
                     },
                     {
@@ -132,7 +128,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 4137,
+            "dc:extent": 5016,
             "tableSchema": {
                 "columns": [
                     {
@@ -188,6 +184,10 @@
                     {
                         "datatype": "string",
                         "name": "Family"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "SourceFile"
                     }
                 ],
                 "primaryKey": [

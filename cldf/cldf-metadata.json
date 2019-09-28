@@ -1,8 +1,13 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
+    "aboutUrl": null,
     "dc:bibliographicCitation": "",
     "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#Wordlist",
+    "dc:description": null,
     "dc:identifier": "",
+    "dc:isVersionOf": null,
+    "dc:license": null,
+    "dc:related": null,
     "dc:title": "channumerals",
     "rdf:ID": "channumerals",
     "rdf:type": "http://www.w3.org/ns/dcat#Distribution",
@@ -192,6 +197,14 @@
                     {
                         "datatype": "string",
                         "name": "Contributor"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Base"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Comment"
                     }
                 ],
                 "primaryKey": [

@@ -17,6 +17,8 @@ from pynumerals.errorcheck import errorchecks
 class NumeralsLanguage(Language):
     SourceFile = attr.ib(default=None)
     Contributor = attr.ib(default=None)
+    Base = attr.ib(default=None)
+    Comment = attr.ib(default=None)
 
 @attr.s
 class NumeralsLexeme(Lexeme):
@@ -51,7 +53,6 @@ class Dataset(BaseDataset):
         unknown_gc_cnt = 0
 
         html_files = get_file_paths(self.raw)
-        # html_files = get_file_paths(Path('/Users/bibiko/Documents/Developments/forks/channumerals/raw1'))
         tables = find_tables(html_files)
         glottolog_codes = self.glottolog.languoids_by_code()
         glottolog_iso = self.glottolog.iso.languages
@@ -71,6 +72,8 @@ class Dataset(BaseDataset):
                 iso=glottolog_iso,
                 title_name=table_set[3],
                 source=table_set[4],
+                base=table_set[5],
+                comment=table_set[6],
             )
             entries.append(entry)
 
@@ -114,7 +117,22 @@ class Dataset(BaseDataset):
                             contrib = entry.source[var_id]
                         else:
                             contrib = None
-                            print("check contributor for %s" % ("%s-%i" % (lang_id_prefix, var_id+1)))
+
+                        # build Base
+                        if var_id < len(entry.base):
+                            base = entry.base[var_id]
+                        else:
+                            base = None
+
+                        # build Comment
+                        if var_id < len(entry.comment):
+                            com = entry.comment[var_id]
+                        else:
+                            com = ''
+
+                        if len(set(seen_lg_names[lg_name])) > 1:
+                            com = "CHECK with %s: %s" % (entry.file_name, com)
+
 
                         ds.add_language(
                             ID="%s-%i" % (lang_id_prefix, var_id+1),
@@ -122,7 +140,9 @@ class Dataset(BaseDataset):
                             Glottocode=gc,
                             ISO639P3code=entry.ethnologue_codes[0],
                             SourceFile=entry.file_name,
-                            Contributor=contrib
+                            Contributor=contrib,
+                            Base=base,
+                            Comment=com,
                         )
 
                         for k, vs in var.items():
@@ -181,11 +201,4 @@ class Dataset(BaseDataset):
             ds.objects['LanguageTable'] = sorted(ds.objects['LanguageTable'],
                     key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
             ds.objects['ParameterTable'] = sorted(ds.objects['ParameterTable'],
-                    key=lambda item: int(item['ID']))
-
-        if seen_lg_names:
-            print('check these files for duplicates:')
-            for k,v in seen_lg_names.items():
-                s = set(v)
-                if len(s) > 1:
-                    print(s)
+                    key=lambda item: _x(item['ID']))

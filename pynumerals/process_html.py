@@ -262,7 +262,7 @@ SKIP = [
     "Yanggao-Miao.htm", # Yanghao-Miao.htm
     "Yau-PNG.htm", # Yau-Morobe.htm
     "Yau-PNG.htm", # Yau-Morobe.htm
-    "Yucuna.html", # Yucuna.htm
+    "Yucuna.htm", # Yucuna.html
     "Sakirabia.htm", # Sakirabia-Mekens.htm
     "Mawe.htm", # Satere-Mawe.htm
     ]
@@ -277,7 +277,7 @@ CODE_PATTERNS = [
 
 TITLE_PATTERNS = [
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*\[", flags=re.I),
-    re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*Refer", flags=re.I),
+    re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*Ref", flags=re.I),
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?) {3,}", flags=re.I),
     re.compile("language\s+name\s+and\s+locatii?on\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
 ]
@@ -285,8 +285,21 @@ TITLE_PATTERNS = [
 CONTRIB_PATTERNS = [
     re.compile("linguists?\s+providing\s+data\s+and\s+date\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
     re.compile("linguists?\s+providing\s+data\s+and\s+date\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
-    re.compile("data?\s+source\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
-    re.compile("data?\s+source\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
+    re.compile("data\s+source\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
+    re.compile("source\s*\S\s*(?P<name>.+?)\s*(提供|语言|资料)", flags=re.I),
+    re.compile("data\s+source\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
+    re.compile("source\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
+]
+
+SYSTEM_PATTERNS =[
+    re.compile("has\s+a\s+(?P<name>[^\.’%]+?)\s*((numeral\s+)?systems?)[\s,\.]+(?!(up|base|with))", flags=re.I),
+    re.compile("(is|system)\s+based\s+on\s+((a|the)\s+)?(?P<name>['\w\d]+?)[\.;]", flags=re.I),
+    re.compile("have\s+a\s+(?P<name>[^\.’%]+?)\s*((numeral\s+)?systems?)[\s,\.]+(?!(up|base|with))", flags=re.I),
+    re.compile("system\s+is\s+(?P<name>decimal|deciaml|bianary|vige(s|c)imal|quintenary|quinary\-decimal|quinary\-vigesimal|quinary|binary)", flags=re.I),
+]
+
+COMMENT_PATTERNS = [
+    re.compile("other\s+comments?\s*\S\s*(?P<name>.+?)\s*$", flags=re.I),
 ]
 
 def get_file_paths(raw_htmls, n=None):
@@ -328,24 +341,61 @@ def find_tables(file_paths):
         parsed = BeautifulSoup(f.read_text(), "html.parser")
         sf_names = []
         contributors = []
-        for p in parsed.find_all("p"):
-            t = re.sub(r'[\n\r\t ]+', ' ', p.get_text())
-            for pattern in TITLE_PATTERNS:
-                m = pattern.search(t)
-                if m:
-                    n = re.sub(r' {2,}', ' ', m.group("name")).strip()
-                    sf_names.append(re.sub(r'\s*,$', '', n))
-                    break
+        comments = []
+        bases = []
         all_tables = parsed.find_all("table", {"class": TABLE_IDENTIFIER})
         for tbl in all_tables:
             t = re.sub(r'[\n\r\t ]+', ' ', tbl.get_text())
+            for pattern in TITLE_PATTERNS:
+                m = pattern.search(t)
+                if m:
+                    if len(sf_names):
+                        if len(contributors) < len(sf_names):
+                            contributors.append('')
+                        if len(comments) < len(sf_names):
+                            comments.append('')
+                        if len(bases) < len(sf_names):
+                            bases.append('')
+                    n = re.sub(r' {2,}', ' ', m.group("name")).strip()
+                    sf_names.append(re.sub(r'\s*,$', '', n))
+                    break
             for pattern in CONTRIB_PATTERNS:
                 m = pattern.search(t)
                 if m:
                     n = re.sub(r' {2,}', ' ', m.group("name")).strip()
+                    n = n.replace("提供", "")
                     contributors.append(n)
                     break
-        yield (f.stem, all_tables, f.name, sf_names, contributors)
+            for pattern in COMMENT_PATTERNS:
+                m = pattern.search(t)
+                if m:
+                    n = re.sub(r' {2,}', ' ', m.group("name")).strip()
+                    comments.append(n)
+                    break
+            for pattern in SYSTEM_PATTERNS:
+                m = pattern.search(t)
+                if m:
+                    n = re.sub(r' {2,}', ' ', m.group("name")).strip()
+                    n = re.sub(r"\s*(numerals?|number|traditional|typical|well\-developed|simple|base|cou(n|r)ting|rather|')\s*", '', n, flags=re.I)
+                    n = n.replace("deciaml", "decimal").replace("bianary", "binary").replace("vigecimal", "vigesimal")
+                    if len(n) < 20:
+                        bases.append(n)
+                    else:
+                        bases.append('')
+                    break
+
+        if len(sf_names):
+            if len(contributors) < len(sf_names):
+                contributors.append('')
+            if len(comments) < len(sf_names):
+                comments.append('')
+            if len(bases) < len(sf_names):
+                bases.append('')
+
+        if len(sf_names) != len(contributors) and len(sf_names) != len(bases) and len(sf_names) != len(comments):
+            comments = ["CHECK: %s" % (c) for c in comments]
+
+        yield (f.stem, all_tables, f.name, sf_names, contributors, bases, comments)
 
 
 def find_number_table(table):
@@ -354,7 +404,7 @@ def find_number_table(table):
     we don't have to rely on the (implicit) ordering of tables within the HTML
     files.
     :param table: The tables from a ResultSet to be processed.
-    :return: True if number table (>= 10 numerals), False otherwise.
+    :return: True if number table (>= 1 numerals), False otherwise.
     """
     numbers = []
 

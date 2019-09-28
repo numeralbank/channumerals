@@ -22,6 +22,8 @@ class NumeralsEntry:
     iso = attr.ib(default=None)
     title_name = attr.ib(default=None)
     source = attr.ib(default=None)
+    base = attr.ib(default=None)
+    comment = attr.ib(default=None)
 
     number_tables = attr.ib(init=False)
     other_tables = attr.ib(init=False)

@@ -1,8 +1,13 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
+    "aboutUrl": null,
     "dc:bibliographicCitation": "",
     "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#Wordlist",
+    "dc:description": null,
     "dc:identifier": "",
+    "dc:isVersionOf": null,
+    "dc:license": null,
+    "dc:related": null,
     "dc:title": "channumerals",
     "rdf:ID": "channumerals",
     "rdf:type": "http://www.w3.org/ns/dcat#Distribution",
@@ -21,7 +26,7 @@
     "tables": [
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#FormTable",
-            "dc:extent": 191062,
+            "dc:extent": 185937,
             "tableSchema": {
                 "columns": [
                     {
@@ -85,10 +90,6 @@
                     },
                     {
                         "datatype": "string",
-                        "name": "SourceFile"
-                    },
-                    {
-                        "datatype": "string",
                         "name": "Problematic"
                     },
                     {
@@ -132,7 +133,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 4137,
+            "dc:extent": 5016,
             "tableSchema": {
                 "columns": [
                     {
@@ -188,6 +189,22 @@
                     {
                         "datatype": "string",
                         "name": "Family"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "SourceFile"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Contributor"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Base"
+                    },
+                    {
+                        "datatype": "string",
+                        "name": "Comment"
                     }
                 ],
                 "primaryKey": [

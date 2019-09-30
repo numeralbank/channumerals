@@ -1,28 +1,83 @@
 from pytest import raises, approx
+from pathlib import Path
+from pyglottolog import Glottolog
 
 from pynumerals.numerals_html import NumeralsEntry
+from pynumerals.number_parser import parse_number
+from pynumerals.process_html import find_tables
 
+raw_htmls = Path(__file__).parent / '../' / 'raw'
 
-def test_table_number():
-    # FIXME: non-static path
-    html = NumeralsEntry('original_htm_files/Abui.htm')
+gl_repos = Path(__file__).parent / '../..' / 'glottolog'
+glottolog = Glottolog(gl_repos)
 
-    assert len(html.numeralbank_tables) == 4
+gc_codes = glottolog.languoids_by_code()
+gc_iso = glottolog.iso.languages
+
+def test_find_tables():
+    d = list(find_tables([raw_htmls / 'Abui.htm']))[0]
+    assert len(d) == 7
+
+def test_numeral_tables():
+    d = list(find_tables([raw_htmls / 'Abui.htm']))[0]
+    entry = NumeralsEntry(
+        base_name=d[0],
+        tables=d[1],
+        file_name=d[2],
+        title_name=d[3],
+        codes=gc_codes,
+        iso=gc_iso,
+        source=d[4],
+        base=d[5],
+        comment=d[6],
+    )
+    assert len(entry.tables) == 8
 
 
 def test_base_name():
-    html_abui = NumeralsEntry('original_htm_files/Abui.htm')
-    html_zoque = NumeralsEntry('original_htm_files/Zoque-Copainala.htm')
-    html_yim = NumeralsEntry('original_htm_files/Yimgchungru Naga.htm')
+    for f in [raw_htmls / 'Abui.htm', raw_htmls / 'Zoque-Copainala.htm', raw_htmls / 'Yimchungru-Naga.htm']:
+        d = list(find_tables([f]))[0]
+        entry = NumeralsEntry(
+            base_name=d[0],
+            tables=d[1],
+            file_name=d[2],
+            title_name=d[3],
+            codes=gc_codes,
+            iso=gc_iso,
+            source=d[4],
+            base=d[5],
+            comment=d[6],
+        )
+        assert entry.base_name == Path(f).stem
 
-    assert html_abui.base_name == 'Abui'
-    assert html_zoque.base_name == 'Zoque-Copainala'
-    assert html_yim.base_name == 'Yimgchungru Naga'
+
+
+def test_parse_number():
+    with raises(ValueError):
+        parse_number("No number in here!")
+    with raises(ValueError):
+        parse_number("1 foo")
+
+    assert parse_number("1 ː") == 1
+    assert parse_number("1,000.") == 1000
+    assert parse_number("1,000.15 .") == 1000.15
+    assert approx(parse_number("1,22:")) == 1.22
 
 
 def test_fuzzy_number_matching():
-    html_aari = NumeralsEntry('original_htm_files/Aari.htm')
-    numeral_table = html_aari.numeralbank_tables[1]
+    d = list(find_tables([raw_htmls / 'Aari.htm']))[0]
+    entry = NumeralsEntry(
+        base_name=d[0],
+        tables=d[1],
+        file_name=d[2],
+        title_name=d[3],
+        codes=gc_codes,
+        iso=gc_iso,
+        source=d[4],
+        base=d[5],
+        comment=d[6],
+    )
+    numeral_table = entry.tables[1]
     table_elements = numeral_table.find_all('tr')
     cell_content = []
 
@@ -40,19 +95,7 @@ def test_fuzzy_number_matching():
     # ..
     # 20 | 2000
 
-    assert html_aari.parse_number(cell_content[0][0]) == 1
-    assert html_aari.parse_number(cell_content[0][1]) == 21
-    assert html_aari.parse_number(cell_content[9][0]) == 10
-    assert html_aari.parse_number(cell_content[19][1]) == 2000
-
-    with raises(ValueError):
-        html_aari.parse_number("No number in here!")
-
-    assert html_aari.parse_number("1,000") == 1000
-    assert html_aari.parse_number("1,000.15") == 1000.15
-    assert approx(html_aari.parse_number("1,22")) == 1.22
-
-
-def test_identify_tables():
-    html_aari = NumeralsEntry('original_htm_files/Aari.htm')
-    html_aari.identify_tables(html_aari.numeralbank_tables)
+    assert parse_number(cell_content[0][0]) == 1
+    assert parse_number(cell_content[0][1]) == 21
+    assert parse_number(cell_content[9][0]) == 10
+    assert parse_number(cell_content[19][1]) == 2000

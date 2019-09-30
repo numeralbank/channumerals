@@ -78,6 +78,7 @@ class Dataset(BaseDataset):
             entries.append(entry)
 
         seen_lg_names = {}
+        lg_variant_counter = {}
 
         with self.cldf as ds:
             meaning_map = {}
@@ -133,9 +134,12 @@ class Dataset(BaseDataset):
                         if len(set(seen_lg_names[lg_name])) > 1:
                             com = "CHECK with %s: %s" % (entry.file_name, com)
 
+                        if not lang_id_prefix in lg_variant_counter:
+                            lg_variant_counter[lang_id_prefix] = 0
+                        lg_variant_counter[lang_id_prefix] += 1
 
                         ds.add_language(
-                            ID="%s-%i" % (lang_id_prefix, var_id+1),
+                            ID="%s-%i" % (lang_id_prefix, lg_variant_counter[lang_id_prefix]),
                             Name=lg_name,
                             Glottocode=gc,
                             ISO639P3code=entry.ethnologue_codes[0],
@@ -184,7 +188,7 @@ class Dataset(BaseDataset):
                                             Value=value,
                                             Parameter_ID=meaning_n,
                                             Variant_ID = (var_id+1),
-                                            Language_ID="%s-%i" % (lang_id_prefix, var_id+1),
+                                            Language_ID="%s-%i" % (lang_id_prefix, lg_variant_counter[lang_id_prefix]),
                                             Comment=comment,
                                             Other_Form = other_form,
                                             Loan = loan,

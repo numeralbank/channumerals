@@ -12,10 +12,10 @@ Cite the source dataset as
 ![Concepticon: 84%](https://img.shields.io/badge/Concepticon-84%25-yellowgreen.svg "Concepticon: 84%")
 ![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
 
-- **Varieties:** 5,016
+- **Varieties:** 5,284
 - **Concepts:** 95
 - **Lexemes:** 185,937
-- **Synonymy:** 1.15
+- **Synonymy:** 1.10
 
 ## Possible Improvements:
 
@@ -39,6 +39,7 @@ Cite the source dataset as
   - Gascon, France [gasc1241](http://glottolog.org/resource/languoid/id/gasc1241)
   - Bigong Gelao (A'ou), China [gela1261](http://glottolog.org/resource/languoid/id/gela1261)
   - Pudi Gelao (A'ou), China [gela1261](http://glottolog.org/resource/languoid/id/gela1261)
+  - Pudi Gelao, China [gela1261](http://glottolog.org/resource/languoid/id/gela1261)
   - Dananshan Miao, China [hmon1338](http://glottolog.org/resource/languoid/id/hmon1338)
   - Inpui Naga (Kabui), India [inpu1234](http://glottolog.org/resource/languoid/id/inpu1234)
   - Izere, Nigeria [izer1243](http://glottolog.org/resource/languoid/id/izer1243)
@@ -53,10 +54,12 @@ Cite the source dataset as
   - Mengisa, Cameroun [meng1263](http://glottolog.org/resource/languoid/id/meng1263)
   - Mundari, India [mund1339](http://glottolog.org/resource/languoid/id/mund1339)
   - Natüɡu, Solomon Islands [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
+  - Santa Cruz, Solomon Islands [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
   - Laze, China [naxi1246](http://glottolog.org/resource/languoid/id/naxi1246)
   - Ngarla, Australia [ngar1286](http://glottolog.org/resource/languoid/id/ngar1286)
   - Ngarla, Australia [ngar1286](http://glottolog.org/resource/languoid/id/ngar1286)
   - Nitinat (Ditidaht), Canada [noot1239](http://glottolog.org/resource/languoid/id/noot1239)
+  - Nootka, Canada [noot1239](http://glottolog.org/resource/languoid/id/noot1239)
   - Upper Necaxa Totonac, Mexico [patl1234](http://glottolog.org/resource/languoid/id/patl1234)
   - Phangduwali, Nepal [phan1256](http://glottolog.org/resource/languoid/id/phan1256)
   - Provençal, France [prov1247](http://glottolog.org/resource/languoid/id/prov1247)
@@ -72,6 +75,7 @@ Cite the source dataset as
   - Sizaki, Tanzania [siza1240](http://glottolog.org/resource/languoid/id/siza1240)
   - Southern Zhuang, China [sout3221](http://glottolog.org/resource/languoid/id/sout3221)
   - Gbaya Mbodomo, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)
+  - Southwest Gbaya, CAR, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)
   - Southwest Gbaya, CAR, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)
   - Southwest Gbaya, CAR, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)
   - Suba, Kenya, Tanzania [suba1254](http://glottolog.org/resource/languoid/id/suba1254)

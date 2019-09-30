@@ -133,7 +133,7 @@
         },
         {
             "dc:conformsTo": "http://cldf.clld.org/v1.0/terms.rdf#LanguageTable",
-            "dc:extent": 5016,
+            "dc:extent": 5284,
             "tableSchema": {
                 "columns": [
                     {

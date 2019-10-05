@@ -1,1 +1,0 @@
-The old numerals pipeline and other assoreted files can be found here. Kept for reference until `pynumerals` is ready.

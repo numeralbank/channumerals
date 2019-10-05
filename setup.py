@@ -23,7 +23,7 @@ setup(
     },
     install_requires=[
         'clldutils',
-        'pylexibank==1.1.1',
+        'pylexibank>=1.1.1',
         'beautifulsoup4>=4.6.3',
         'fuzzywuzzy',
         'pyglottolog',

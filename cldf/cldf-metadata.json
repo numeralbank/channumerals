@@ -89,7 +89,7 @@
                         "name": "Loan"
                     },
                     {
-                        "datatype": "string",
+                        "datatype": "boolean",
                         "name": "Problematic"
                     },
                     {

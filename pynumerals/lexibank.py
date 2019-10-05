@@ -22,7 +22,9 @@ class NumeralsLanguage(Language):
 
 @attr.s
 class NumeralsLexeme(Lexeme):
-    Problematic = attr.ib(init=False)
+    Problematic = attr.ib(
+            init=False,
+            validator=attr.validators.optional(attr.validators.instance_of(bool)))
     Other_Form = attr.ib(default=None)
     Variant_ID = attr.ib(default=1)
 
@@ -206,3 +208,6 @@ class Dataset(BaseDataset):
                     key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
             ds.objects['ParameterTable'] = sorted(ds.objects['ParameterTable'],
                     key=lambda item: _x(item['ID']))
+
+            ds.wl['FormTable', 'Problematic'].datatype.base = 'boolean'
+

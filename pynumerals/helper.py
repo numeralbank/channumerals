@@ -56,18 +56,24 @@ def int_to_en(num):
 
     if num < k:
         if num % 100 == 0:
+            if num // 100 == 1:
+                return "hundred"
             return int_to_english[num // 100] + " hundred"
         else:
             return int_to_english[num // 100] + " hundred and " + int_to_en(num % 100)
 
     if num < m:
         if num % k == 0:
+            if num // k == 1:
+                return "thousand"
             return int_to_en(num // k) + " thousand"
         else:
             return int_to_en(num // k) + " thousand, " + int_to_en(num % k)
 
     if num < b:
         if (num % m) == 0:
+            if num // m == 1:
+                return "million"
             return int_to_en(num // m) + " million"
         else:
             return int_to_en(num // m) + " million, " + int_to_en(num % m)

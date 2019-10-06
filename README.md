@@ -9,12 +9,13 @@ Cite the source dataset as
 
 [![Build Status](https://travis-ci.org/None.svg?branch=master)](https://travis-ci.org/None)
 ![Glottolog: 99%](https://img.shields.io/badge/Glottolog-99%25-green.svg "Glottolog: 99%")
-![Concepticon: 84%](https://img.shields.io/badge/Concepticon-84%25-yellowgreen.svg "Concepticon: 84%")
-![Source: 0%](https://img.shields.io/badge/Source-0%25-red.svg "Source: 0%")
+![Concepticon: 89%](https://img.shields.io/badge/Concepticon-89%25-yellowgreen.svg "Concepticon: 89%")
+![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")
 
 - **Varieties:** 5,284
 - **Concepts:** 95
 - **Lexemes:** 185,946
+- **Sources:** 1
 - **Synonymy:** 1.10
 
 ## Possible Improvements:
@@ -90,5 +91,3 @@ Cite the source dataset as
   - Southern Yi, China [yuan1242](http://glottolog.org/resource/languoid/id/yuan1242)
   - Yugh, Russia [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
 
-
-- Entries missing sources: 185946/185946 (100.00%)

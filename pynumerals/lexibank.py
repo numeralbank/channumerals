@@ -2,6 +2,7 @@ import re
 
 import attr
 from clldutils.path import Path
+from clldutils.text import split_text_with_context
 from pylexibank.dataset import Dataset as BaseDataset
 from pylexibank.dataset import Lexeme, Language
 
@@ -47,6 +48,11 @@ class Dataset(BaseDataset):
     lexeme_class = NumeralsLexeme
     language_class = NumeralsLanguage
 
+    # TODO quick fix to avoid https://github.com/lexibank/pylexibank/issues/122
+    def split_forms(self, item, value):
+        return filter(None, [self.clean_form(item, form)
+                    for form in split_text_with_context(value, separators='/,;')])
+
     def cmd_download(self, **kw):
         pass
 
@@ -84,6 +90,8 @@ class Dataset(BaseDataset):
 
         with self.cldf as ds:
             meaning_map = {}
+
+            ds.add_sources(*self.raw.read_bib())
 
             for entry in entries:
                 number_lexemes = entry.get_numeral_lexemes()
@@ -186,12 +194,13 @@ class Dataset(BaseDataset):
                                     value, comment, other_form, loan = value_parser(value)
 
                                     if value:
-                                        ds.add_lexemes(
+                                        ds.add_forms_from_value(
                                             Value=value,
                                             Parameter_ID=meaning_n,
                                             Variant_ID = (var_id+1),
                                             Language_ID="%s-%i" % (lang_id_prefix, lg_variant_counter[lang_id_prefix]),
                                             Comment=comment,
+                                            Source="chan2019",
                                             Other_Form = other_form,
                                             Loan = loan,
                                         )

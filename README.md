@@ -7,7 +7,7 @@ Cite the source dataset as
 ## Statistics
 
 
-[![Build Status](https://travis-ci.org/None.svg?branch=master)](https://travis-ci.org/None)
+[![Build Status](https://travis-ci.org/lexibank/channumerals.svg?branch=master)](https://travis-ci.org/None)
 ![Glottolog: 99%](https://img.shields.io/badge/Glottolog-99%25-green.svg "Glottolog: 99%")
 ![Concepticon: 89%](https://img.shields.io/badge/Concepticon-89%25-yellowgreen.svg "Concepticon: 89%")
 ![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")

@@ -2,7 +2,8 @@
 
 Cite the source dataset as
 
-> 
+>  Chan, Eugene (eds.) 2019. Numeral Systems of the World's Languages. https://mpi-lingweb.shh.mpg.de/numeral - accessed: 30 Sep 2019
+
 
 ## Statistics
 
@@ -23,7 +24,7 @@ Cite the source dataset as
 - Languages linked to [bookkeeping languoids in Glottolog](http://glottolog.org/glottolog/glottologinformation#bookkeepinglanguoids):
   - Ahirani, Gujarat, India [ahir1243](http://glottolog.org/resource/languoid/id/ahir1243)
   - Auvergnat, France [auve1240](http://glottolog.org/resource/languoid/id/auve1240)
-  - Banawá, Brazil [bana1306](http://glottolog.org/resource/languoid/id/bana1306)
+  - Banawá, Brazil [bana1306](http://glottolog.org/resource/languoid/id/bana1306)
   - Beti, Cameroun [beti1250](http://glottolog.org/resource/languoid/id/beti1250)
   - Bisu, China, Thailand [bisu1247](http://glottolog.org/resource/languoid/id/bisu1247)
   - Bumang, China [buma1247](http://glottolog.org/resource/languoid/id/buma1247)
@@ -44,7 +45,7 @@ Cite the source dataset as
   - Dananshan Miao, China [hmon1338](http://glottolog.org/resource/languoid/id/hmon1338)
   - Inpui Naga (Kabui), India [inpu1234](http://glottolog.org/resource/languoid/id/inpu1234)
   - Izere, Nigeria [izer1243](http://glottolog.org/resource/languoid/id/izer1243)
-  - Jaruára (Jarawara), Brazil [jaru1257](http://glottolog.org/resource/languoid/id/jaru1257)
+  - Jaruára (Jarawara), Brazil [jaru1257](http://glottolog.org/resource/languoid/id/jaru1257)
   - Katingan, Kalimantan, Indonesia [kati1278](http://glottolog.org/resource/languoid/id/kati1278)
   - Khao, Vietnam [khao1244](http://glottolog.org/resource/languoid/id/khao1244)
   - Kukna, India [kukn1238](http://glottolog.org/resource/languoid/id/kukn1238)
@@ -54,7 +55,7 @@ Cite the source dataset as
   - Malinguat, Papua New Guinea [mali1288](http://glottolog.org/resource/languoid/id/mali1288)
   - Mengisa, Cameroun [meng1263](http://glottolog.org/resource/languoid/id/meng1263)
   - Mundari, India [mund1339](http://glottolog.org/resource/languoid/id/mund1339)
-  - Natüɡu, Solomon Islands [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
+  - Natüɡu, Solomon Islands [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
   - Santa Cruz, Solomon Islands [natu1249](http://glottolog.org/resource/languoid/id/natu1249)
   - Laze, China [naxi1246](http://glottolog.org/resource/languoid/id/naxi1246)
   - Ngarla, Australia [ngar1286](http://glottolog.org/resource/languoid/id/ngar1286)
@@ -68,7 +69,7 @@ Cite the source dataset as
   - Quetzaltepec Mixe, Mexico [quet1239](http://glottolog.org/resource/languoid/id/quet1239)
   - Rajbanshi, Nepal, India, Bangladesh [rajb1244](http://glottolog.org/resource/languoid/id/rajb1244)
   - Samre, Cambodia [samr1245](http://glottolog.org/resource/languoid/id/samr1245)
-  - Sanapaná, Paraguay [sana1281](http://glottolog.org/resource/languoid/id/sana1281)
+  - Sanapaná, Paraguay [sana1281](http://glottolog.org/resource/languoid/id/sana1281)
   - Shempire Senoufo, Mali [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
   - Shempire Senoufo, Côte d'Ivoire [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
   - Sil'te (East Gurage), Ethiopia [silt1241](http://glottolog.org/resource/languoid/id/silt1241)

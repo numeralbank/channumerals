@@ -1,9 +1,9 @@
 import attr
 import re
 
-from pynumerals.glottocode_matcher import GlottocodeMatcher
-from pynumerals.process_html import iterate_tables, find_ethnologue_codes
-from pynumerals.number_parser import parse_number
+from glottocode_matcher import GlottocodeMatcher
+from process_html import iterate_tables, find_ethnologue_codes
+from number_parser import parse_number
 from clldutils.text import split_text_with_context
 
 _BRACKETS = {
@@ -12,6 +12,7 @@ _BRACKETS = {
     "[": "]",
     "‘": "’",
 }
+
 
 @attr.s
 class NumeralsEntry:
@@ -57,10 +58,11 @@ class NumeralsEntry:
                     continue
 
                 e = re.sub(r'^\s*[\d,]+\s*[\.:ː]\s*', '', entry)
-                e = re.sub(r'\s~\s', '/', e) # split alternative forms
-                e = re.sub(r'\s*～\s*', '/', e) # split alternative forms
+                e = re.sub(r'\s~\s', '/', e)  # split alternative forms
+                e = re.sub(r'\s*～\s*', '/', e)  # split alternative forms
                 e = re.sub(r'/n$', '(n)', e)
-                lex = list(filter(None, split_text_with_context(e, separators='/,;，', brackets=_BRACKETS)))
+                lex = list(filter(None, split_text_with_context(
+                    e, separators='/,;，', brackets=_BRACKETS)))
                 n[i][parsed_entry] = [clean.strip() for clean in lex]
 
             varieties.append(n)

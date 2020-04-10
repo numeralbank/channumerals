@@ -4,14 +4,16 @@ import attr
 from clldutils.path import Path
 from clldutils.text import split_text_with_context
 from pylexibank.dataset import Dataset as BaseDataset
-from pylexibank.dataset import Lexeme, Language
+from pylexibank.models import Lexeme, Language
+from pylexibank.forms import FormSpec
+from pylexibank.util import progressbar
 
-from pynumerals.helper import int_to_en
-from pynumerals.numerals_html import NumeralsEntry
-from pynumerals.process_html import get_file_paths, find_tables
-from pynumerals.value_parser import value_parser
+from helper import int_to_en
+from numerals_html import NumeralsEntry
+from process_html import get_file_paths, find_tables
+from value_parser import value_parser
 
-from pynumerals.errorcheck import errorchecks
+from errorcheck import errorchecks
 
 
 @attr.s
@@ -20,6 +22,7 @@ class NumeralsLanguage(Language):
     Contributor = attr.ib(default=None)
     Base = attr.ib(default=None)
     Comment = attr.ib(default=None)
+
 
 @attr.s
 class NumeralsLexeme(Lexeme):
@@ -40,7 +43,6 @@ class NumeralsLexeme(Lexeme):
 
 
 class Dataset(BaseDataset):
-    # TODO: Change splitting class.
 
     id = "channumerals"
     dir = Path(__file__).parent.parent
@@ -48,19 +50,35 @@ class Dataset(BaseDataset):
     lexeme_class = NumeralsLexeme
     language_class = NumeralsLanguage
 
-    # TODO quick fix to avoid https://github.com/lexibank/pylexibank/issues/122
-    def split_forms(self, item, value):
-        return filter(None, [self.clean_form(item, form)
-                    for form in split_text_with_context(value, separators='/,;')])
+    form_spec = FormSpec(
+        brackets={
+            "(": ")",
+            "{": "}",
+            "[": "]",
+            "（": "）",
+            "【": "】",
+            "『": "』",
+            "«": "»",
+            "⁽": "⁾",
+            "₍": "₎"
+        },
+        replacements=[],
+        separators=(";", "/", ","),
+        missing_data=('?', '-'),
+        strip_inside_brackets=False,
+        first_form_only=False,
+        normalize_whitespace=True,
+        normalize_unicode=None,
+    )
 
-    def cmd_download(self, **kw):
+    def cmd_download(self, args):
         pass
 
-    def cmd_install(self, **kw):
+    def cmd_makecldf(self, args):
 
         unknown_gc_cnt = 0
 
-        html_files = get_file_paths(self.raw)
+        html_files = get_file_paths(self.raw_dir)
         tables = find_tables(html_files)
         glottolog_codes = self.glottolog.languoids_by_code()
         glottolog_iso = self.glottolog.iso.languages
@@ -88,135 +106,175 @@ class Dataset(BaseDataset):
         seen_lg_names = {}
         lg_variant_counter = {}
 
-        with self.cldf as ds:
-            meaning_map = {}
+        # with args.writer.cldf as ds:
+        meaning_map = {}
 
-            ds.add_sources(*self.raw.read_bib())
+        args.writer.add_sources(*self.raw_dir.read_bib())
+        args.writer.cldf['FormTable', 'Problematic'].datatype.base = 'boolean'
 
-            for entry in entries:
-                number_lexemes = entry.get_numeral_lexemes()
+        # remove newly added columns in order to get a good diff
+        args.writer.cldf['FormTable'].tableSchema.columns = [
+            c for c in args.writer.cldf['FormTable'].tableSchema.columns
+            if c.name != 'Graphemes' and c.name != 'Profile']
 
-                for variety in number_lexemes:
+        # map old lang_ids (without 'MsoNormalTable' table class)
+        # against new ones to minimize diffs
+        lang_id_map = {
+            "hupd1244-4": ["hupd1244-2", 2-1],
+            "hupd1244-2": ["hupd1244-3", 3-1],
+            "hupd1244-3": ["hupd1244-4", 4-1],
 
-                    for var_id, var in variety.items():
+            "nucl1440-2": ["nucl1440-1", 1-1],
+            "nucl1440-3": ["nucl1440-2", 2-1],
+            "nucl1440-1": ["nucl1440-3", 3-1],
 
-                        # build language name
-                        if var_id < len(entry.title_name):
-                            lg_name = entry.title_name[var_id]
-                        elif len(entry.title_name):
-                            lg_name = entry.title_name[0]
-                        else:
-                            lg_name = entry.base_name
+            "poum1235-2": ["poum1235-1", 1-1],
+            "poum1235-1": ["poum1235-2", 2-1],
 
-                        if not entry.ethnologue_codes:
-                            entry.ethnologue_codes = ['']
+            "wayu1241-1": ["wayu1241-2", 2-1],
+            "wayu1241-2": ["wayu1241-1", 1-1],
 
-                        if not entry.glottocodes:
-                            unknown_gc_cnt += 1
-                            gc = ''
-                            lang_id_prefix = 'xxxx%04d' % (unknown_gc_cnt)
-                        else:
-                            lang_id_prefix = entry.glottocodes[0]
-                            gc = lang_id_prefix
+            "port1283-1": ["port1283-2", 2-1],
+            "port1283-2": ["port1283-1", 1-1],
+        }
 
-                        if not lg_name in seen_lg_names:
-                            seen_lg_names[lg_name] = []
-                        seen_lg_names[lg_name].append(entry.file_name)
+        for entry in progressbar(entries, desc="makecldf"):
+            number_lexemes = entry.get_numeral_lexemes()
 
-                        # build Contributor name
-                        if var_id < len(entry.source):
-                            contrib = entry.source[var_id]
-                        else:
-                            contrib = None
+            for variety in number_lexemes:
 
-                        # build Base
-                        if var_id < len(entry.base):
-                            base = entry.base[var_id]
-                        else:
-                            base = None
+                for var_id, var in variety.items():
 
-                        # build Comment
-                        if var_id < len(entry.comment):
-                            com = entry.comment[var_id]
-                        else:
-                            com = ''
+                    # build language name
+                    if var_id < len(entry.title_name):
+                        lg_name = entry.title_name[var_id]
+                    elif len(entry.title_name):
+                        lg_name = entry.title_name[0]
+                    else:
+                        lg_name = entry.base_name
 
-                        if len(set(seen_lg_names[lg_name])) > 1:
-                            com = "CHECK with %s: %s" % (entry.file_name, com)
+                    if not entry.ethnologue_codes:
+                        entry.ethnologue_codes = ['']
 
-                        if not lang_id_prefix in lg_variant_counter:
-                            lg_variant_counter[lang_id_prefix] = 0
-                        lg_variant_counter[lang_id_prefix] += 1
+                    # map 'old' glottocodes against new one
+                    # to minimize diff
+                    if lg_name == 'Enlhet (Lengua), Paraguay':
+                        entry.glottocodes = ['leng1262']
+                    if lg_name == 'Gerai, Indonesia':
+                        entry.glottocodes = ['sema1269']
 
-                        ds.add_language(
-                            ID="%s-%i" % (lang_id_prefix, lg_variant_counter[lang_id_prefix]),
-                            Name=lg_name,
-                            Glottocode=gc,
-                            ISO639P3code=entry.ethnologue_codes[0],
-                            SourceFile=entry.file_name,
-                            Contributor=contrib,
-                            Base=base,
-                            Comment=com,
-                        )
+                    if not entry.glottocodes:
+                        unknown_gc_cnt += 1
+                        gc = ''
+                        lang_id_prefix = 'xxxx%04d' % (unknown_gc_cnt)
+                    else:
+                        lang_id_prefix = entry.glottocodes[0]
+                        gc = lang_id_prefix
 
-                        for k, vs in var.items():
-                            meaning_n = str(k)
-                            for v in vs:
+                    if lg_name not in seen_lg_names:
+                        seen_lg_names[lg_name] = []
+                    seen_lg_names[lg_name].append(entry.file_name)
 
-                                if meaning_n not in meaning_map:
-                                    meaning_map[meaning_n] = str(k)
-                                    ds.add_concept(
-                                        ID=meaning_map[meaning_n],
-                                        Name=meaning_n,
-                                        Concepticon_ID=concept_map.get(int_to_en(k).upper()),
+                    # build Contributor name
+                    if var_id < len(entry.source):
+                        contrib = entry.source[var_id]
+                    else:
+                        contrib = None
+
+                    # build Base
+                    if var_id < len(entry.base):
+                        base = entry.base[var_id]
+                    else:
+                        base = None
+
+                    # build Comment
+                    if var_id < len(entry.comment):
+                        com = entry.comment[var_id]
+                    else:
+                        com = ''
+
+                    if len(set(seen_lg_names[lg_name])) > 1:
+                        com = "CHECK with %s: %s" % (entry.file_name, com)
+
+                    if lang_id_prefix not in lg_variant_counter:
+                        lg_variant_counter[lang_id_prefix] = 0
+                    lg_variant_counter[lang_id_prefix] += 1
+                    c_lang_id = "%s-%i" % (
+                        lang_id_prefix, lg_variant_counter[lang_id_prefix])
+
+                    # map according to old table parser without 'MsoNormalTable'
+                    if c_lang_id in lang_id_map:
+                        c_lang_id, var_id = lang_id_map[c_lang_id]
+
+                    args.writer.add_language(
+                        ID=c_lang_id,
+                        Name=lg_name,
+                        Glottocode=gc,
+                        ISO639P3code=entry.ethnologue_codes[0],
+                        SourceFile=entry.file_name,
+                        Latitude="",
+                        Longitude="",
+                        Macroarea="",
+                        Family="",
+                        Glottolog_Name="",
+                        Contributor=contrib,
+                        Base=base,
+                        Comment=com,
+                    )
+
+                    for k, vs in var.items():
+                        meaning_n = str(k)
+                        for v in vs:
+
+                            if meaning_n not in meaning_map:
+                                meaning_map[meaning_n] = str(k)
+                            args.writer.add_concept(
+                                ID=meaning_map[meaning_n],
+                                Name=meaning_n,
+                                Concepticon_ID=concept_map.get(int_to_en(k).upper()),
+                            )
+
+                            if v:
+                                value = v.replace("\n", "").replace("\t", "")
+                                # after 2 or more non break spaces follows a comment
+                                if '(' not in value:
+                                    value = re.sub(r'^(.*?) {2,}(.*)$', '\\1 (\\2)', value)
+                                # after an em dash follows a comment
+                                if '(' not in value:
+                                    value = re.sub(r'^(.*?)\s*–\s*(.*)$', '\\1 (\\2)', value)
+                                # replace non break space by spaces
+                                value = value.replace(" ", " ")
+                                # put single string 'foo = IPA' into brackets
+                                if '=' in value and '(' not in value:
+                                    value = re.sub(
+                                        r'^(.*?)\s(\S+\s*=\s*IPA.*)$', '\\1 (\\2)', value)
+
+                                value, comment, other_form, loan = value_parser(value)
+
+                                if value:
+                                    args.writer.add_forms_from_value(
+                                        Value=value,
+                                        Parameter_ID=meaning_n,
+                                        Variant_ID=(var_id+1),
+                                        Language_ID=c_lang_id,
+                                        Comment=comment,
+                                        Source="chan2019",
+                                        Other_Form=other_form,
+                                        Loan=loan,
                                     )
-                                else:
-                                    ds.add_concept(
-                                        ID=meaning_map[meaning_n],
-                                        Name=meaning_n,
-                                        Concepticon_ID=concept_map.get(int_to_en(k).upper()),
-                                    )
-
-                                if v:
-                                    value = v.replace("\n", "").replace("\t", "")
-                                    # after 2 or more non break spaces follows a comment
-                                    if '(' not in value:
-                                        value = re.sub(r'^(.*?) {2,}(.*)$', '\\1 (\\2)', value)
-                                    # after an em dash follows a comment
-                                    if '(' not in value:
-                                        value = re.sub(r'^(.*?)\s*–\s*(.*)$', '\\1 (\\2)', value)
-                                    # replace non break space by spaces
-                                    value = value.replace(" ", " ")
-                                    # put single string 'foo = IPA' into brackets
-                                    if '=' in value and not '(' in value:
-                                        value = re.sub(r'^(.*?)\s(\S+\s*=\s*IPA.*)$', '\\1 (\\2)', value)
-
-                                    value, comment, other_form, loan = value_parser(value)
-
-                                    if value:
-                                        ds.add_forms_from_value(
-                                            Value=value,
-                                            Parameter_ID=meaning_n,
-                                            Variant_ID = (var_id+1),
-                                            Language_ID="%s-%i" % (lang_id_prefix, lg_variant_counter[lang_id_prefix]),
-                                            Comment=comment,
-                                            Source="chan2019",
-                                            Other_Form = other_form,
-                                            Loan = loan,
-                                        )
 
             def _x(s):
                 try:
                     return int(s)
-                except:
+                except ValueError:
                     return s
 
-            ds.objects['FormTable'] = sorted(ds.objects['FormTable'],
-                    key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
-            ds.objects['LanguageTable'] = sorted(ds.objects['LanguageTable'],
-                    key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
-            ds.objects['ParameterTable'] = sorted(ds.objects['ParameterTable'],
-                    key=lambda item: _x(item['ID']))
-
-            ds.wl['FormTable', 'Problematic'].datatype.base = 'boolean'
-
+            args.writer.objects['FormTable'] = sorted(
+                args.writer.objects['FormTable'],
+                key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+            args.writer.objects['LanguageTable'] = sorted(
+                args.writer.objects['LanguageTable'],
+                key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+            args.writer.objects['ParameterTable'] = sorted(
+                args.writer.objects['ParameterTable'],
+                key=lambda item: _x(item['ID']))

@@ -1,20 +1,22 @@
 import re
-from pynumerals.config import CHAR_REPL
+from config import CHAR_REPL
+
 
 def value_parser(value):
 
     other_form = None
     loan = False
-    val = re.sub(r'\s*\*+$', '', value.strip()) # remove trailing *
-    
+    val = re.sub(r'\s*\*+$', '', value.strip())  # remove trailing *
+
     for k, v in CHAR_REPL.items():
         val = val.replace(k, v)
 
     if len(val) > 2:
         if val[0] == '[' and val[-1] == ']':
             val = val[1:-1]
-        # [foo] should be IPA represenation, everything in front of move to other_form (standard orthography)
-        if '[' in val and not 'IPA' in val and not '=' in val and not '[lit' in val:
+        # [foo] should be IPA represenation, everything in front of move to
+        # other_form (standard orthography)
+        if '[' in val and 'IPA' not in val and '=' not in val and '[lit' not in val:
             m = re.search(r'(.*?)\s*\[([^\[\d]*?)\](.*)', val)
             if m:
                 m = list(m.groups())
@@ -25,8 +27,9 @@ def value_parser(value):
     # everything after [ or ( or { is considered as being a comment
     # if it ends on counterpart - stuff like foo(b) will be ignored
     comment = ''
-    for sep in [['[',']','?'], ['(',')',''], ['{','}','']]:
-        s = re.compile("^(.*%s)\%s([^\%s]{2,}|[A-Z])\%s([\s\?\+\d]*)$" % (sep[2], sep[0], sep[0], sep[1]))
+    for sep in [['[', ']', '?'], ['(', ')', ''], ['{', '}', '']]:
+        s = re.compile(r"^(.*%s)\%s([^\%s]{2,}|[A-Z])\%s([\s\?\+\d]*)$" % (
+            sep[2], sep[0], sep[0], sep[1]))
         m = s.search(val)
         if m:
             stack = 0
@@ -48,7 +51,7 @@ def value_parser(value):
 
     # check for loans
     if comment:
-        loan = bool(re.match(r'.*<\s*[A-Z]', comment)) # lgs starts with capital letter
+        loan = bool(re.match(r'.*<\s*[A-Z]', comment))  # lgs starts with capital letter
         com = [comment]
     else:
         com = []
@@ -63,7 +66,7 @@ def value_parser(value):
                 com.append("< %s " % (" < ".join(m[2::2])).strip())
             loan = True
 
-    val = re.sub(r'\s*[\*<]+$', '', val.strip()) # remove trailing *, <
+    val = re.sub(r'\s*[\*<]+$', '', val.strip())  # remove trailing *, <
     val = re.sub(r' {2,}', ' ', val)
 
     comment = ', '.join(com)
@@ -75,6 +78,5 @@ def value_parser(value):
         comment = comment.strip()
 
     val = re.sub(r'\s*\(\s*$', '', val).strip()
-
 
     return val, comment, other_form, loan

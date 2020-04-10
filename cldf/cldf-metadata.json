@@ -7,25 +7,25 @@
     "dc:related": null,
     "dc:source": "sources.bib",
     "dc:title": "channumerals",
-    "dcat:accessURL": "git@github.com:lexibank/channumerals",
+    "dcat:accessURL": "https://github.com/lexibank/channumerals",
     "prov:wasDerivedFrom": [
         {
             "rdf:type": "prov:Entity",
             "dc:title": "Repository",
-            "rdf:about": "git@github.com:lexibank/channumerals",
+            "rdf:about": "https://github.com/lexibank/channumerals",
             "dc:created": "v1.0-4-g6e7a718"
         },
         {
             "rdf:type": "prov:Entity",
             "dc:title": "Glottolog",
             "rdf:about": "https://github.com/glottolog/glottolog",
-            "dc:created": "eWAVE-3.0-12-gca0059929e"
+            "dc:created": "eWAVE-3.0"
         },
         {
             "rdf:type": "prov:Entity",
             "dc:title": "Concepticon",
             "rdf:about": "https://github.com/concepticon/concepticon-data",
-            "dc:created": "v2.3.0-41-g22d9d52"
+            "dc:created": "v2.3.0"
         },
         {
             "rdf:type": "prov:Entity",

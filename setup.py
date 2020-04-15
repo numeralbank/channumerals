@@ -3,8 +3,7 @@ import sys
 import json
 
 
-PY2 = sys.version_info.major == 2
-with open('metadata.json', **({} if PY2 else {'encoding': 'utf-8'})) as fp:
+with open('metadata.json', {'encoding': 'utf-8'}) as fp:
     metadata = json.load(fp)
 
 
@@ -22,11 +21,12 @@ setup(
         ]
     },
     install_requires=[
-        'clldutils',
-        'pylexibank>=1.1.1',
+        'cldfbench>=1.0.0',
+        'clldutils>=3.5.0',
+        'pylexibank>=2.1',
+        'pyglottolog>=3.1.0',
         'beautifulsoup4>=4.6.3',
         'fuzzywuzzy',
-        'pyglottolog',
         'pytest',
         'xlrd',
         'attrs',

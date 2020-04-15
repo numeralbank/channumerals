@@ -13,7 +13,7 @@
             "rdf:type": "prov:Entity",
             "dc:title": "Repository",
             "rdf:about": "https://github.com/lexibank/channumerals",
-            "dc:created": "v1.0-4-g6e7a718"
+            "dc:created": "v1.0-8-gea53d95"
         },
         {
             "rdf:type": "prov:Entity",

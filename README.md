@@ -1,12 +1,18 @@
-# channumerals
+# CLDF dataset derived from Chan's Numerals
 
 Cite the source dataset as
 
 > Chan, Eugene (eds.) 2019. Numeral Systems of the World's Languages. https://mpi-lingweb.shh.mpg.de/numeral - accessed: 30 Sep 2019
 
+Available online at https://mpi-lingweb.shh.mpg.de/numeral
+
+
+Conceptlists in Concepticon:
+- [Chan-2019-128](https://concepticon.clld.org/contributions/Chan-2019-128)
 ## Statistics
 
 
+[![Build Status](https://travis-ci.org/numeralbank/channumerals.svg?branch=master)](https://travis-ci.org/numeralbank/channumerals)
 ![Glottolog: 99%](https://img.shields.io/badge/Glottolog-99%25-green.svg "Glottolog: 99%")
 ![Concepticon: 100%](https://img.shields.io/badge/Concepticon-100%25-brightgreen.svg "Concepticon: 100%")
 ![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")
@@ -68,8 +74,6 @@ Cite the source dataset as
   - Rajbanshi, Nepal, India, Bangladesh [rajb1244](http://glottolog.org/resource/languoid/id/rajb1244)
   - Samre, Cambodia [samr1245](http://glottolog.org/resource/languoid/id/samr1245)
   - Sanapaná, Paraguay [sana1281](http://glottolog.org/resource/languoid/id/sana1281)
-  - Shempire Senoufo, Mali [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
-  - Shempire Senoufo, Côte d'Ivoire [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
   - Sil'te (East Gurage), Ethiopia [silt1241](http://glottolog.org/resource/languoid/id/silt1241)
   - Southern Zhuang, China [sout3221](http://glottolog.org/resource/languoid/id/sout3221)
   - Gbaya Mbodomo, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)

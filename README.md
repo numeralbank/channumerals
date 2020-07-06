@@ -1,4 +1,4 @@
-# CLDF dataset derived from Chan's Numerals
+# CLDF dataset derived from Chan's "Numeral Systems of the World's Languages." from 2019
 
 Cite the source dataset as
 

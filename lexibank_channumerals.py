@@ -3,17 +3,17 @@ import re
 import attr
 from clldutils.path import Path
 from clldutils.text import split_text_with_context
+
 from pylexibank.dataset import Dataset as BaseDataset
 from pylexibank.models import Lexeme, Language
 from pylexibank.forms import FormSpec
 from pylexibank.util import progressbar
 
-from helper import int_to_en
-from numerals_html import NumeralsEntry
-from process_html import get_file_paths, find_tables
-from value_parser import value_parser
-
-from errorcheck import errorchecks
+from pynumerals.numerals_utils import int_to_en
+from pynumerals.numerals_html import NumeralsEntry
+from pynumerals.process_html import get_file_paths, find_tables
+from pynumerals.value_parser import value_parser
+from pynumerals.errorcheck import errorchecks
 
 
 @attr.s
@@ -82,10 +82,10 @@ class Dataset(BaseDataset):
         tables = find_tables(html_files)
         glottolog_codes = self.glottolog.languoids_by_code()
         glottolog_iso = self.glottolog.iso.languages
-        concept_map = {cs.gloss: cs.id for cs in self.concepticon.conceptsets.values()}
-
-        for concept in self.concepts:
-            concept_map[concept["GLOSS"]] = concept["CONCEPTICON_ID"]
+        concept_map = {cs.english: (cs.concepticon_id, cs.concepticon_gloss)
+                       for cs in self.conceptlists[0].concepts.values()}
+        concept_map_fb = {cs.gloss: (cs.id, cs.gloss)
+                          for cs in self.concepticon.conceptsets.values()}
 
         entries = []
 
@@ -162,6 +162,8 @@ class Dataset(BaseDataset):
                         entry.glottocodes = ['leng1262']
                     if lg_name == 'Gerai, Indonesia':
                         entry.glottocodes = ['sema1269']
+                    if lg_name == 'Southern Ndebele, South Africa':
+                        entry.glottocodes = ['sout2808']
 
                     if not entry.glottocodes:
                         unknown_gc_cnt += 1
@@ -231,7 +233,14 @@ class Dataset(BaseDataset):
                             args.writer.add_concept(
                                 ID=meaning_map[meaning_n],
                                 Name=meaning_n,
-                                Concepticon_ID=concept_map.get(int_to_en(k).upper()),
+                                Concepticon_ID=concept_map.get(
+                                    meaning_n,
+                                    concept_map_fb.get(
+                                        int_to_en(k).upper(), ('', '')))[0],
+                                Concepticon_Gloss=concept_map.get(
+                                    meaning_n,
+                                    concept_map_fb.get(
+                                        int_to_en(k).upper(), ('', '')))[1],
                             )
 
                             if v:

@@ -234,13 +234,9 @@ class Dataset(BaseDataset):
                                 ID=meaning_map[meaning_n],
                                 Name=meaning_n,
                                 Concepticon_ID=concept_map.get(
-                                    meaning_n,
-                                    concept_map_fb.get(
-                                        int_to_en(k).upper(), ('', '')))[0],
+                                    meaning_n, '')[0],
                                 Concepticon_Gloss=concept_map.get(
-                                    meaning_n,
-                                    concept_map_fb.get(
-                                        int_to_en(k).upper(), ('', '')))[1],
+                                    meaning_n, '')[1],
                             )
 
                             if v:

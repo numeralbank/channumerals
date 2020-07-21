@@ -43,7 +43,7 @@ pyparsing==2.2.0
 pytest==5.4.3
 pytz==2018.5
 regex==2018.11.7
-requests==2.12.3
+requests==2.20.0
 rfc3986==1.1.0
 scipy==1.4.1
 segments==2.1.2

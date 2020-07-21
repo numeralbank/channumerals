@@ -84,8 +84,6 @@ class Dataset(BaseDataset):
         glottolog_iso = self.glottolog.iso.languages
         concept_map = {cs.english: (cs.concepticon_id, cs.concepticon_gloss)
                        for cs in self.conceptlists[0].concepts.values()}
-        concept_map_fb = {cs.gloss: (cs.id, cs.gloss)
-                          for cs in self.concepticon.conceptsets.values()}
 
         entries = []
 
@@ -234,13 +232,9 @@ class Dataset(BaseDataset):
                                 ID=meaning_map[meaning_n],
                                 Name=meaning_n,
                                 Concepticon_ID=concept_map.get(
-                                    meaning_n,
-                                    concept_map_fb.get(
-                                        int_to_en(k).upper(), ('', '')))[0],
+                                    meaning_n, '')[0],
                                 Concepticon_Gloss=concept_map.get(
-                                    meaning_n,
-                                    concept_map_fb.get(
-                                        int_to_en(k).upper(), ('', '')))[1],
+                                    meaning_n, '')[1],
                             )
 
                             if v:

@@ -2,13 +2,13 @@
 
 Cite the source dataset as
 
-> Chan, Eugene (eds.) 2019. Numeral Systems of the World's Languages. https://mpi-lingweb.shh.mpg.de/numeral - accessed: 30 Sep 2019
+> Chan, Eugene (eds.) 2019. Numeral Systems of the World's Languages. https://mpi-lingweb.shh.mpg.de/numeral - accessed: 2019-09-30
 
 Available online at https://mpi-lingweb.shh.mpg.de/numeral
 
 
 Conceptlists in Concepticon:
-- [Chan-2019-128](https://concepticon.clld.org/contributions/Chan-2019-128)
+- [Chan-2019-133](https://concepticon.clld.org/contributions/Chan-2019-133)
 ## Statistics
 
 

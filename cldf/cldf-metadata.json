@@ -17,7 +17,7 @@
             "rdf:type": "prov:Entity",
             "dc:title": "Repository",
             "rdf:about": "https://github.com/numeralbank/channumerals",
-            "dc:created": "v1.0-17-g76565df"
+            "dc:created": "v1.0-19-g9f6b02c"
         },
         {
             "rdf:type": "prov:Entity",

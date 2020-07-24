@@ -9,7 +9,6 @@ from pylexibank.models import Lexeme, Language
 from pylexibank.forms import FormSpec
 from pylexibank.util import progressbar
 
-from pynumerals.numerals_utils import int_to_en
 from pynumerals.numerals_html import NumeralsEntry
 from pynumerals.process_html import get_file_paths, find_tables
 from pynumerals.value_parser import value_parser
@@ -212,11 +211,6 @@ class Dataset(BaseDataset):
                         Glottocode=gc,
                         ISO639P3code=entry.ethnologue_codes[0],
                         SourceFile=entry.file_name,
-                        Latitude="",
-                        Longitude="",
-                        Macroarea="",
-                        Family="",
-                        Glottolog_Name="",
                         Contributor=contrib,
                         Base=base,
                         Comment=com,
@@ -228,14 +222,14 @@ class Dataset(BaseDataset):
 
                             if meaning_n not in meaning_map:
                                 meaning_map[meaning_n] = str(k)
-                            args.writer.add_concept(
-                                ID=meaning_map[meaning_n],
-                                Name=meaning_n,
-                                Concepticon_ID=concept_map.get(
-                                    meaning_n, '')[0],
-                                Concepticon_Gloss=concept_map.get(
-                                    meaning_n, '')[1],
-                            )
+                                args.writer.add_concept(
+                                    ID=meaning_map[meaning_n],
+                                    Name=meaning_n,
+                                    Concepticon_ID=concept_map.get(
+                                        meaning_n, '')[0],
+                                    Concepticon_Gloss=concept_map.get(
+                                        meaning_n, '')[1],
+                                )
 
                             if v:
                                 value = v.replace("\n", "").replace("\t", "")

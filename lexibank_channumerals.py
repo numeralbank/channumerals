@@ -260,18 +260,18 @@ class Dataset(BaseDataset):
                                         Loan=loan,
                                     )
 
-            def _x(s):
-                try:
-                    return int(s)
-                except ValueError:
-                    return s
+        def _x(s):
+            try:
+                return int(s)
+            except ValueError:
+                return s
 
-            args.writer.objects['FormTable'] = sorted(
-                args.writer.objects['FormTable'],
-                key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
-            args.writer.objects['LanguageTable'] = sorted(
-                args.writer.objects['LanguageTable'],
-                key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
-            args.writer.objects['ParameterTable'] = sorted(
-                args.writer.objects['ParameterTable'],
-                key=lambda item: _x(item['ID']))
+        args.writer.objects['FormTable'] = sorted(
+            args.writer.objects['FormTable'],
+            key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+        args.writer.objects['LanguageTable'] = sorted(
+            args.writer.objects['LanguageTable'],
+            key=lambda item: ([_x(i) for i in item['ID'].split('-')]))
+        args.writer.objects['ParameterTable'] = sorted(
+            args.writer.objects['ParameterTable'],
+            key=lambda item: _x(item['ID']))

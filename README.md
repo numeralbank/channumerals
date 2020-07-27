@@ -9,6 +9,11 @@ Available online at https://mpi-lingweb.shh.mpg.de/numeral
 
 Conceptlists in Concepticon:
 - [Chan-2019-133](https://concepticon.clld.org/contributions/Chan-2019-133)
+## Notes
+
+This CLDF dataset is an automated extraction of Chan's "Numeral Systems of the World's Languages" data. A manually curated CLDF version is under [https://github.com/numeralbank/numerals](https://github.com/numeralbank/numerals) available.
+
+
 ## Statistics
 
 

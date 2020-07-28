@@ -13,12 +13,6 @@
             "name": "Hans-J\u00f6rg Bibiko"
         },
         {
-            "name": "Hans-J\u00f6rg Bibiko"
-        },
-        {
-            "name": "Christoph Rzymski"
-        },
-        {
             "name": "Christoph Rzymski"
         }
     ],
@@ -26,6 +20,14 @@
         {
             "name": "Eugene Chan",
             "type": "DataCollector"
+        },
+        {
+            "name": "Hans-J\u00f6rg Bibiko",
+            "type": "DataCollector"
+        },
+        {
+            "name": "Hans-J\u00f6rg Bibiko",
+            "type": "DataCurator"
         },
         {
             "name": "Christoph Rzymski",

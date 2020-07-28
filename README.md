@@ -79,6 +79,8 @@ This CLDF dataset is an automated extraction of Chan's "Numeral Systems of the W
   - Rajbanshi, Nepal, India, Bangladesh [rajb1244](http://glottolog.org/resource/languoid/id/rajb1244)
   - Samre, Cambodia [samr1245](http://glottolog.org/resource/languoid/id/samr1245)
   - Sanapaná, Paraguay [sana1281](http://glottolog.org/resource/languoid/id/sana1281)
+  - Shempire Senoufo, Mali [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
+  - Shempire Senoufo, Côte d'Ivoire [shem1239](http://glottolog.org/resource/languoid/id/shem1239)
   - Sil'te (East Gurage), Ethiopia [silt1241](http://glottolog.org/resource/languoid/id/silt1241)
   - Southern Zhuang, China [sout3221](http://glottolog.org/resource/languoid/id/sout3221)
   - Gbaya Mbodomo, Cameroun [sout3222](http://glottolog.org/resource/languoid/id/sout3222)
@@ -96,4 +98,15 @@ This CLDF dataset is an automated extraction of Chan's "Numeral Systems of the W
   - Yendang (Nyandang), Nigeria [yend1240](http://glottolog.org/resource/languoid/id/yend1240)
   - Southern Yi, China [yuan1242](http://glottolog.org/resource/languoid/id/yuan1242)
   - Yugh, Russia [yugh1240](http://glottolog.org/resource/languoid/id/yugh1240)
+
+
+
+# Contributors
+
+Name               | GitHub user     | Description                          | Role
+---                | ---             | ---                                  | ---
+Eugene Chan |  | study design, data collection and data maintainer                               | DataCollector, Author
+Hans-Jörg Bibiko | @Bibiko | patron, code, helped with data collection | Maintainer, Author
+Christoph Rzymski | @chrzyki | helped with code | Maintainer, Other, Author
+Robert Forkel | @xrotwang | helped with code and project structure | Other
 

@@ -25,7 +25,7 @@ openpyxl==3.0.4
 packaging==20.3
 pluggy==0.13.1
 purl==1.5
-py==1.8.2
+py==1.10.0
 pybtex==0.22.2
 pycldf==1.14.1
 pyclts==2.1.2

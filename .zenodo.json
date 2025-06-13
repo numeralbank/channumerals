@@ -8,12 +8,6 @@
     "creators": [
         {
             "name": "Eugene Chan"
-        },
-        {
-            "name": "Hans-J\u00f6rg Bibiko"
-        },
-        {
-            "name": "Christoph Rzymski"
         }
     ],
     "contributors": [
@@ -31,7 +25,7 @@
         },
         {
             "name": "Christoph Rzymski",
-            "type": "Other"
+            "type": "DataCurator"
         },
         {
             "name": "Robert Forkel",
@@ -44,5 +38,5 @@
         }
     ],
     "upload_type": "dataset",
-    "description": "<p>Cite the source of the dataset as:</p>\n\n<blockquote>\n<p>Chan, Eugene (eds.) 2019. Numeral Systems of the World&#x27;s Languages. https://mpi-lingweb.shh.mpg.de/numeral - accessed: 2019-09-30</p>\n</blockquote>"
+    "description": "<p>Cite the source of the dataset as:</p>\n\n<blockquote>\n<p>Chan, Eugene (eds.) 2019. Numeral Systems of the World&#x27;s Languages. Accessed: 2019-09-30</p>\n</blockquote>"
 }
